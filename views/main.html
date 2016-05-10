@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cmn-Hans" ng-app="suikeApp">
+<html lang="zh-cmn-Hans" ng-app="mainApp">
 	<head>
 		<meta charset="utf-8">
 		<meta name="author" content="Lesty<lesty612@163.com>">
@@ -10,7 +10,11 @@
 		<link rel="stylesheet" href="./css/bootstrap.min.css">
 		<link rel="stylesheet" href="./css/main.css">
 	</head>
-	<body></body>
+	<body>
+		<div class="container">
+			<div ng-view></div>
+		</div>
+	</body>
 	<script src="./js/lib/jquery-2.1.4.min.js"></script>
 	<script src="./js/lib/bootstrap.min.js"></script>
 	<script src="./js/lib/angular.min.js"></script>

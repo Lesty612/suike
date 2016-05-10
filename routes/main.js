@@ -5,11 +5,15 @@ var express = require('express'),
  * @codeDate 2016.5.10
  */
 router.get('/', function(req, res, next) {
-	res.render();
-	res.render('main');
+	res.render('main/welcome');
 });
 
-router.get('/login', function() {
-	console.log(req.body);
+router.post('/login', function(req, res) {
 	res.status(200).send(req.body);
 });
+
+router.post('/register', function(req, res) {
+	res.status(200).send(req.body);
+});
+
+module.exports = router;
