@@ -1,0 +1,21 @@
+{
+  "name": "suike",
+  "version": "1.0.0",
+  "description": "毕Lesty的毕业设计，英语学���随堂学习应用",
+  "main": "./js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "angularjs",
+    "express"
+  ],
+  "author": "Lesty",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "multer": "^1.1.0"
+  }
+}
