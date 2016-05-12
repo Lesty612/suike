@@ -5,7 +5,7 @@ var express = require('express'),
  * @codeDate 2016.5.10
  */
 router.get('/', function(req, res, next) {
-	res.render('main/welcome');
+	res.render('main');
 });
 
 router.post('/login', function(req, res) {

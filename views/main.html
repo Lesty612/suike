@@ -10,14 +10,26 @@
 		<link rel="stylesheet" href="./css/bootstrap.min.css">
 		<link rel="stylesheet" href="./css/main.css">
 	</head>
-	<body>
-		<div class="container">
+	<body class="main-bg">
+		<div class="container main-contain">
+			<header class="wel-head row">
+				<h2 class="wel-title col-sm-6"><a href="#/welcome">随堂英语学习</a></h2>
+				<nav>
+					<ul class="wel-nav col-sm-offset-2 col-sm-4">
+						<li><a href="https://github.com/Lesty612">Lesty's Github</a></li>
+					</ul>
+				</nav>
+			</header>
 			<div ng-view></div>
+			<footer class="wel-footer">
+				<p>&copy;2015-2016 Suitang English. Designed by <a href="https://github.com/Lesty612">@Lesty</a></p>
+			</footer>
 		</div>
 	</body>
 	<script src="./js/lib/jquery-2.1.4.min.js"></script>
 	<script src="./js/lib/bootstrap.min.js"></script>
 	<script src="./js/lib/angular.min.js"></script>
+	<script src="./js/lib/angular-route.min.js"></script>
 	<script src="./js/app.js"></script>
 	<script src="./js/controllers.js"></script>
 	<script src="./js/directives.js"></script>

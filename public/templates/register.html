@@ -1,0 +1,29 @@
+<section class="login-contain">
+    <nav>
+        <ul class="login-nav">
+            <li><a href="#/login">登录</a></li>
+            <li><a href="#/register" class="nav-active">注册</a></li>
+        </ul>
+    </nav>
+    <form class="login-form" action="register" method="post">
+        <div class="login-box">
+            <label class="login-label" for="userName">Name：</label>
+            <input class="login-input" id="userName" name="userName" type="text" placeholder="请输入您的姓名" minlength="5" required>
+        </div>
+        <div class="login-box">
+            <label class="login-label" for="email">Email：</label>
+            <input class="login-input" id="email" name="email" type="email" placeholder="请输入您的邮箱" required>
+        </div>
+        <div class="login-box">
+            <label class="login-label" for="password">Password：</label>
+            <input class="login-input" id="password" name="password" type="password" placeholder="请输入您的密码" required minlength="6">
+        </div>
+        <div class="login-box">
+            <label class="login-label" for="passwordAg">Repeat：</label>
+            <input class="login-input" id="passwordAg" name="passwordAg" type="password" placeholder="请确认您的密码" required minlength="6">
+        </div>
+        <div class="login-box">
+            <button type="submit" class="btn btn-lg btn-primary login-btn">注册(Sign up)</button>
+        </div>
+    </form>
+</section>

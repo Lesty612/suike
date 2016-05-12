@@ -5,4 +5,14 @@
  */
 var mainControllers = angular.module('mainControllers', []);
 
-mainControllers.controller('welcomeCtrl', ['$scope']);
+mainControllers.controller('welcomeCtrl', ['$scope', function($scope) {
+	$scope.email = 'lesty612@111.com'
+}]);
+
+mainControllers.controller('loginCtrl', ['$scope', function($scope) {
+	//
+}]);
+
+mainControllers.controller('registerCtrl', ['$scope', function($scope) {
+	//
+}]);
