@@ -4,6 +4,10 @@ var express = require('express'),
 /**
  * [基于user的二级路由]
  */
+router.get('/', function(req, res) {
+	res.render('user');
+});
+
 router.get('/info', function(req, res) {
     res.send('user info');
 });

@@ -9,11 +9,17 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/login', function(req, res) {
-	res.status(200).send(req.body);
+	if(req.body.email === "lesty612@163.com" && req.body.password === "123456") {
+		res.redirect('/');
+	} else {
+		res.status(200).json({
+			error: "用户名或密码错误！"
+		});
+	}
 });
 
 router.post('/register', function(req, res) {
-	res.status(200).send(req.body);
+	res.redirect('/user');
 });
 
 module.exports = router;
