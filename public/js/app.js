@@ -7,7 +7,10 @@ var mainApp = angular.module('mainApp', [
 		'ngRoute',
 		'mainControllers'
 	]);
-var userApp = angular.module('userApp', []);
+var selectApp = angular.module('selectApp', [
+		'ngRoute',
+		'selectControllers'
+	]);
 
 mainApp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/welcome', {
@@ -22,4 +25,29 @@ mainApp.config(['$routeProvider', function($routeProvider) {
 	}).otherwise({
 		redirectTo: '/welcome'
 	});
+}]);
+
+selectApp. config(['$routeProvider', function($routeProvider) {
+	$routeProvider.when('/books', {
+		templateUrl: './templates/books.html',
+		controller: 'booksCtrl'
+	}).when('/units', {
+		templateUrl: './templates/units.html',
+		controller: 'unitsCtrl'
+	}).when('/parts', {
+		templateUrl: './templates/parts.html',
+		controller: 'partsCtrl'
+	}).when('/word-list', {
+		templateUrl: './templates/word-list.html',
+		controller: 'wordListCtrl'
+	}).when('/info', {
+		templateUrl: './templates/info.html',
+		controller: 'infoCtrl'
+	}).otherwise({
+		redirectTo: '/units'
+	});
+}]);
+
+selectApp.run(['$rootScope', '$http', function($rootScope, $http) {
+	$rootScope.userName = 'Lesty';
 }]);

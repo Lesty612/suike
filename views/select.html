@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cmn-Hans" ng-app="mainApp">
+<html lang="zh-cmn-Hans" ng-app="selectApp">
 	<head>
 		<meta charset="utf-8">
 		<meta name="author" content="Lesty<lesty612@163.com>">
@@ -8,22 +8,26 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>随堂英语学习</title>
 		<link rel="stylesheet" href="./css/bootstrap.min.css">
-		<link rel="stylesheet" href="./css/main.css">
+		<link rel="stylesheet" href="./css/select.css">
 	</head>
 	<body class="main-bg">
-		<div class="container main-contain">
-			<header class="wel-head row">
-				<h2 class="wel-title col-sm-6"><a href="#/welcome">随堂英语学习</a></h2>
-				<nav>
-					<ul class="wel-nav col-sm-offset-2 col-sm-4">
-						<li><a href="https://github.com/Lesty612">Lesty's Github</a></li>
-					</ul>
-				</nav>
+		<div class="container-full main-contain" ng-cloak>
+			<header class="main-head row">
+				<h3 class="main-title"><a href="/">随堂英语学习</a></h3>
+				<h4 class="module-title">{{moduleTitle}}</h4>
+				<!-- Single button -->
+				<div class="btn-group info-nav">
+				  <span class="dropdown-toggle to-cursor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{userName}} <i class="caret"></i>
+				  </span>
+				  <ul class="dropdown-menu to-right">
+				    <li><a href="#/info">个人中心</a></li>
+				    <li role="separator" class="divider"></li>
+				    <li><a href="https://github.com/Lesty612">意见反馈</a></li>
+				    <li><a href="/logout" ">注销</a></li>
+				  </ul>
+				</div>
 			</header>
 			<div ng-view></div>
-			<footer class="wel-footer">
-				<p>&copy;2015-2016 Suitang English. Designed by <a href="https://github.com/Lesty612">@Lesty</a></p>
-			</footer>
 		</div>
 	</body>
 	<script src="./js/lib/jquery-2.1.4.min.js"></script>

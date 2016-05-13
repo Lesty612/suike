@@ -1,8 +1,9 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     multer = require('multer'),
-    routes = require('./routes/main'),
-    user = require('./routes/user'),
+    userRoutes = require('./routes/user'),
+    selectRoutes = require('./routes/select'),
+    typeRoutes = require('./routes/type');
     path = require('path');
 
 /**
@@ -25,8 +26,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // 设置相应路由
-app.use('/', routes);
-app.use('/user', user);
+app.use('/', userRoutes);
+app.use('/select', selectRoutes);
+app.use('/type', typeRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
