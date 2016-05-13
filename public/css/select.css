@@ -8,6 +8,11 @@ html, body {
 	background-color: #f9f9f9;
 }
 
+.main-contain {
+	position: relative;
+	text-align: center;
+}
+
 .main-head {
 	background-color: #333;
 	padding: 10px 10px 0;
@@ -60,8 +65,6 @@ html, body {
 	text-align: center;
 }
 
-.main-contain {
-	position: relative;
-	text-align: center;
+.sel-contain {
+	color: #000;
 }
-

@@ -28,8 +28,12 @@ selectControllers.controller('booksCtrl', ['$scope', '$rootScope', function($sco
 	$rootScope.moduleTitle = '教材选择';
 }]);
 
-selectControllers.controller('unitsCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+selectControllers.controller('unitsCtrl', ['$scope', '$rootScope', '$http', '$log', function($scope, $rootScope, $http, $log) {
 	$rootScope.moduleTitle = '单元选择';
+	$http.post('/select/choose_book').then(function(res) {
+		$scope.units = res.data.units;
+	});
+
 }]);
 
 selectControllers.controller('partsCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
