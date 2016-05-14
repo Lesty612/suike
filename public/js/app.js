@@ -9,6 +9,7 @@ var mainApp = angular.module('mainApp', [
 	]);
 var selectApp = angular.module('selectApp', [
 		'ngRoute',
+		'ngAnimate',
 		'selectControllers'
 	]);
 
@@ -31,7 +32,7 @@ selectApp. config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/books', {
 		templateUrl: './templates/books.html',
 		controller: 'booksCtrl'
-	}).when('/units', {
+	}).when('/units/:bookId', {
 		templateUrl: './templates/units.html',
 		controller: 'unitsCtrl'
 	}).when('/parts', {

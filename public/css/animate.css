@@ -1,0 +1,10 @@
+/* cross fading between routes with ngView */
+
+.view-frame.ng-enter {
+    transition: transform .5s;
+    transform: translateX(100%);
+}
+
+.view-frame.ng-enter.ng-enter-active {
+    transform: translateX(0);
+}

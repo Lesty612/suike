@@ -10,6 +10,31 @@ router.get('/', function(req, res) {
 	res.render('select');
 });
 
+router.post('/books_info', function(req, res) {
+	res.status(200).json([
+		{
+			name: '人教版第一册',
+			bookId: 1,
+			progress: '29'
+		},
+		{
+			name: '人教版第二册',
+			bookId: 2,
+			progress: '12'
+		},
+		{
+			name: '人教版第三册',
+			bookId: 3,
+			progress: '24'
+		},
+		{
+			name: '人教版第四册',
+			bookId: 4,
+			progress: '26'
+		}
+	]);
+});
+
 router.post('/choose_book', function(req, res) {
 	res.status(200).json({
 		status: true,

@@ -3,9 +3,12 @@ html, body {
 	font-family: 'SimHei',"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
+/**
+ * [select.html主页面]
+ */
 .main-bg {
 	color: #fff;
-	background-color: #f9f9f9;
+	background-color: #fff;
 }
 
 .main-contain {
@@ -67,4 +70,69 @@ html, body {
 
 .sel-contain {
 	color: #000;
+}
+
+/**
+ * [units页面]
+ */
+
+
+/**
+ * [books页面]
+ */
+.book-name {
+	margin: 25px auto 0;
+}
+
+.book-name > a {
+	display: inline-block;
+	padding: 5px;
+
+	font-size: 17px;
+	font-weight: bold;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+@media(min-width: 768px) {
+	.book-name {
+		width: 60%;
+		margin-top: 40px;
+	}
+
+	.book-name > a {
+		font-size: 19px;
+		padding: 10px;
+	}
+}
+
+.book-name > a:hover {
+	color: #555;
+}
+
+.book-progress {
+	margin: 0 auto;
+}
+
+.progress-to-center {
+	position: absolute;
+	left: 50%;
+
+	-moz-transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-o-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+
+@media(min-width: 768px) {
+	.book-progress {
+		width: 60%;
+		height: 30px;
+	}
+
+	.progress-to-center {
+		line-height: 30px;
+		font-size: 15px;
+	}
 }

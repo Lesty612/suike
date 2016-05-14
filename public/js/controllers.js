@@ -24,12 +24,16 @@ mainControllers.controller('registerCtrl', ['$scope', function($scope) {
 /**
  * [selectControllers控制器]
  */
-selectControllers.controller('booksCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+selectControllers.controller('booksCtrl', ['$scope', '$rootScope', '$http', function($scope, $rootScope, $http) {
 	$rootScope.moduleTitle = '教材选择';
+	$http.post('/select/books_info').then(function(res) {
+		$scope.books = res.data;
+	});
 }]);
 
-selectControllers.controller('unitsCtrl', ['$scope', '$rootScope', '$http', '$log', function($scope, $rootScope, $http, $log) {
+selectControllers.controller('unitsCtrl', ['$scope', '$rootScope', '$http', '$routeParams', function($scope, $rootScope, $http, $routeParams) {
 	$rootScope.moduleTitle = '单元选择';
+	$scope.curBookId = $routeParams.bookId;
 	$http.post('/select/choose_book').then(function(res) {
 		$scope.units = res.data.units;
 	});

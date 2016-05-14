@@ -23,7 +23,7 @@ router.post('/register', function(req, res) {
 });
 
 router.get('/logout', function(req, res) {
-	res.redirect('/');
+	res.redirect('/#/login');
 });
 
 module.exports = router;
