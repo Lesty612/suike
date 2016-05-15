@@ -35,10 +35,10 @@ selectApp. config(['$routeProvider', function($routeProvider) {
 	}).when('/units/:bookId', {
 		templateUrl: './templates/units.html',
 		controller: 'unitsCtrl'
-	}).when('/parts', {
+	}).when('/parts/:uid', {
 		templateUrl: './templates/parts.html',
 		controller: 'partsCtrl'
-	}).when('/word-list', {
+	}).when('/word-list/:uid', {
 		templateUrl: './templates/word-list.html',
 		controller: 'wordListCtrl'
 	}).when('/info', {

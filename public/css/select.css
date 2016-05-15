@@ -73,13 +73,13 @@ html, body {
 }
 
 /**
- * [units页面]
- */
-
-
-/**
  * [books页面]
  */
+
+.section-contain {
+	position: relative;
+}
+
 .book-name {
 	margin: 25px auto 0;
 }
@@ -135,4 +135,45 @@ html, body {
 		line-height: 30px;
 		font-size: 15px;
 	}
+}
+
+/**
+ * [units页面]
+ */
+.back-nav {
+	position: absolute;
+	top: -20px;
+	left: auto;
+	right: 2%;
+}
+
+.back-nav > a {
+	font-size: 17px;
+	text-decoration: none;
+}
+
+@media(min-width: 768px) {
+	.back-nav {
+		position: absolute;
+		top: -30px;
+		right: auto;
+		left: 20%;
+	}
+
+	.back-nav > a {
+		font-size: 22px;
+	}
+}
+
+/**
+ * [word-list页面]
+ */
+.wl-back-nav {
+
+}
+
+.word-list {
+	margin: 0 auto;
+	list-style: none;
+	text-align: center;
 }

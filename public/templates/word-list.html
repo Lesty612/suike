@@ -1,0 +1,9 @@
+<section class="section-contain">
+	<nav class="wl-back-nav"><a href="#/units/{{uid}}" aria-label="回到教材选择页"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Back</a></nav>
+	<div>
+		<ul class="word-list" ng-repeat="word in wordList">
+			<li>{{word.word}}<span ng-show="hasLearned">{{word.text}}<em></em></span></li>
+		</ul>
+		<a class="btn btn-primary btn-block" href="#/type1"><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span>开始学习(Start learning)</a>
+	</div>
+</section>

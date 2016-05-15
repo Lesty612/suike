@@ -1,4 +1,15 @@
+<section class="section-contain">
+	<nav class="back-nav"><a href="#/books" aria-label="回到教材选择页"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Back</a></nav>
+	<div ng-repeat="unit in units">
+		<div class="book-name">
+			<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+			<a href="#/word-list/{{unit.uid}}">Unit{{unit.uid}}</a>
+		</div>
+		<div class="progress book-progress">
+			<div class="progress-bar" role="progressbar" aria-valuenow="{{unit.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{unit.progress + '%'}}">
+			</div>
+			<span class="progress-to-center">{{unit.hasLearned + ' / ' + unit.total}}</span>
+		</div>
+	</div>
 
-<ul>
-	<li ng-repeat="unit in units">unit: {{unit.unit}} hasLearned: {{unit.hasLearned}} cur:{{curBookId}}</li>
-</ul>
+</section>

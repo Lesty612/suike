@@ -40,17 +40,17 @@ router.post('/choose_book', function(req, res) {
 		status: true,
 		units: [
 			{
-				unit: 1,
+				uid: 1,
 				hasLearned: 5,
 				total: 30
 			},
 			{
-				unit: 2,
+				uid: 2,
 				hasLearned: 4,
 				total: 32
 			},
 			{
-				unit: 3,
+				uid: 3,
 				hasLearned: 17,
 				total: 35
 			}
@@ -77,19 +77,23 @@ router.get('/choose_part', function(req, res) {
 	res.status(200).json([
 		{
 			word: "hello",
-			learnState: true
+			learnState: true,
+			score: 0
 		},
 		{
 			word: "good",
-			learnState: true
+			learnState: true,
+			score: 1
 		},
 		{
 			word: "break",
-			learnState: true
+			learnState: true,
+			score: 0
 		},
 		{
 			word: "controller",
-			learnState: true
+			learnState: true,
+			score: 2
 		}
 	]);
 });
