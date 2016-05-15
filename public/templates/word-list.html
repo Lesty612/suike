@@ -1,9 +1,16 @@
 <section class="section-contain">
-	<nav class="wl-back-nav"><a href="#/units/{{uid}}" aria-label="回到教材选择页"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Back</a></nav>
+	<nav class="word-btn-group">
+		<a class="btn btn-primary" href="#/units/{{uid}}"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>重选单元</a>
+		<a class="btn btn-primary" href="#/type1"><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span>开始学习</a>
+	</nav>
 	<div>
-		<ul class="word-list" ng-repeat="word in wordList">
-			<li>{{word.word}}<span ng-show="hasLearned">{{word.text}}<em></em></span></li>
+		<ul class="word-list">
+			<li ng-repeat="word in wordList">
+				{{word.word}}
+				<div ng-show="hasLearned" class="word-choose-state">
+					<span ng-class="{'word-on': word.learnState}">{{word.text}}<em></em></span>
+				</div>
+			</li>
 		</ul>
-		<a class="btn btn-primary btn-block" href="#/type1"><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span>开始学习(Start learning)</a>
 	</div>
 </section>

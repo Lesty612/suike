@@ -4,6 +4,13 @@ html, body {
 }
 
 /**
+ * [因为有bootstrap,所以要确保ng-clock生效]
+ */
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+/**
  * [select.html主页面]
  */
 .main-bg {
@@ -174,6 +181,37 @@ html, body {
 
 .word-list {
 	margin: 0 auto;
+	padding-left: 0;
 	list-style: none;
 	text-align: center;
+}
+
+@media(min-width: 768px) {
+	.word-list {
+		width: 60%;
+	}
+}
+
+.word-list > li {
+	position: relative;
+	margin: 0px 5%;
+	padding: 10px 5px;
+	border-bottom: solid 1px #DFDFDF;
+	font-size: 17px;
+}
+
+.word-choose-state {
+	display: inline-block;
+	position: absolute;
+	right: 10px;
+}
+
+.word-btn-group {
+	padding: 5px;
+	border-bottom: 2px solid #2e6da4;
+}
+
+.word-btn-group > a {
+	display: inline-block;
+	width: 40%;
 }
