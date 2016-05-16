@@ -95,7 +95,7 @@ router.get('/choose_part', function(req, res) {
 		},
 		{
 			word: "break",
-			learnState: true,
+			learnState: false,
 			score: 0
 		},
 		{

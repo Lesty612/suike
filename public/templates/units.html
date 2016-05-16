@@ -3,7 +3,7 @@
 	<div ng-repeat="unit in units">
 		<div class="book-name">
 			<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-			<a href="#/word-list/{{unit.uid}}">Unit{{unit.uid}}</a>
+			<a href="#/word-list" ng-click="chooseUnit(unit.uid)">Unit{{unit.uid}}</a>
 		</div>
 		<div class="progress book-progress">
 			<div class="progress-bar" role="progressbar" aria-valuenow="{{unit.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{unit.progress + '%'}}">

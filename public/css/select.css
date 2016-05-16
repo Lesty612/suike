@@ -175,8 +175,29 @@ html, body {
 /**
  * [word-list页面]
  */
-.wl-back-nav {
+.word-btn-group {
+	padding: 5px;
+	border-bottom: 2px solid #2e6da4;
+}
 
+.word-btn-group > a {
+	display: inline-block;
+	width: 40%;
+
+	font-size: 16px;
+}
+
+@media(min-width: 768px) {
+	.word-btn-group {
+		padding: 10px;
+		width: 60%;
+		margin: 0 auto;
+	}
+
+	.word-btn-group > a {
+		width: 30%;
+		font-size: 18px;
+	}
 }
 
 .word-list {
@@ -186,32 +207,70 @@ html, body {
 	text-align: center;
 }
 
-@media(min-width: 768px) {
-	.word-list {
-		width: 60%;
-	}
-}
-
 .word-list > li {
 	position: relative;
 	margin: 0px 5%;
 	padding: 10px 5px;
-	border-bottom: solid 1px #DFDFDF;
+	border-bottom: solid 1px #ccc;
 	font-size: 17px;
+	font-weight: bold;
+	color: #ccc;
+}
+
+@media(min-width: 768px) {
+	.word-list {
+		width: 60%;
+	}
+
+	.word-list > li {
+		padding: 15px 5px;
+		font-size: 19px;
+	}
+}
+
+.word-list > li.word-on {
+	color: #000;
 }
 
 .word-choose-state {
 	display: inline-block;
+	width: 60px;
+	height: 30px;
+
 	position: absolute;
+	top: 7px;
 	right: 10px;
+
+	border: 1px solid #777;
+	border-radius: 30px;
+	cursor: pointer;
 }
 
-.word-btn-group {
-	padding: 5px;
-	border-bottom: 2px solid #2e6da4;
+@media(min-width: 768px) {
+	.word-choose-state {
+		top: 13px;
+		right: 15px;
+	}
 }
 
-.word-btn-group > a {
+.word-choose-state > em {
 	display: inline-block;
-	width: 40%;
+	width: 22px;
+	height: 22px;
+
+	position: absolute;
+	left: 4px;
+	top: 3px;
+
+	background-color: #ccc;
+	border-radius: 50%;
+
+	-moz-transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	transition: all 0.5s;
+}
+
+li.word-on > .word-choose-state > em{
+	left: 32px;
+	background-color: #4CDE1C;
 }

@@ -31,7 +31,7 @@ selectControllers.controller('booksCtrl', ['$scope', '$rootScope', '$http', 'sel
 		$scope.books = res.data;
 	});
 
-	$scope.chooseBook = function(event, bookId) {
+	$scope.chooseBook = function(bookId) {
 		selectInfo.setCurBookId(bookId);
 	};
 }]);
@@ -47,24 +47,45 @@ selectControllers.controller('unitsCtrl', ['$scope', '$rootScope', '$http', '$ro
 		});
 	});
 
-
+	$scope.chooseUnit = function(uid) {
+		selectInfo.setCurUnitId(uid);
+	};
 }]);
 
 selectControllers.controller('partsCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
 	$rootScope.moduleTitle = '部分选择';
 }]);
 
-selectControllers.controller('wordListCtrl', ['$scope', '$rootScope', '$http', '$routeParams', function($scope, $rootScope, $http, $routeParams) {
+selectControllers.controller('wordListCtrl', ['$scope', '$rootScope', '$http', '$routeParams', 'selectInfo', function($scope, $rootScope, $http, $routeParams, selectInfo) {
 	$rootScope.moduleTitle = '单词列表';
-	$scope.uid = $routeParams.uid;
-	$http.get('/select/choose_part').then(function(res) {
+	$scope.uid = selectInfo.getCurUnitId();
+
+	// 带上日期参数，避免缓存
+	$http.get('/select/choose_part', {params: {
+		uid: $scope.uid,
+		date: +new Date()
+	}}).then(function(res) {
 		$scope.wordList = res.data;
 		// 遍历分数,如果有分数就为false(现在还没弄)
 		$scope.hasLearned = true;
-		angular.forEach($scope.wordList, function(item, index, arr) {
-			arr[index].text = item.learnState === true ? "学" : "不学";
-		});
 	});
+
+	/**
+	 * [changeWordState 改变wordList里单词的学习状态]
+	 * @param  {String} word [要改变状态的单词]
+	 */
+	$scope.changeWordState = function(word) {
+		// 临时对象
+		var tmpWord = null;
+
+		for(var i = $scope.wordList.length; i--;) {
+			tmpWord = $scope.wordList[i];
+			if(tmpWord.word === word) {
+				$scope.wordList[i].learnState = !tmpWord.learnState;
+				break;
+			}
+		}
+	}
 }]);
 
 selectControllers.controller('infoCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {

@@ -2,7 +2,7 @@
 	<div ng-repeat="book in books">
 		<div class="book-name">
 			<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-			<a href="#/units/{{book.bookId}}" ng-click="chooseBook($event, book.bookId)">{{book.name}}</a>
+			<a href="#/units/{{book.bookId}}" ng-click="chooseBook(book.bookId)">{{book.name}}</a>
 		</div>
 		<div class="progress book-progress">
 			<div class="progress-bar" role="progressbar" aria-valuenow="{{book.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{book.progress + '%'}}">

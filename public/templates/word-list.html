@@ -1,14 +1,14 @@
 <section class="section-contain">
 	<nav class="word-btn-group">
-		<a class="btn btn-primary" href="#/units/{{uid}}"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>重选单元</a>
+		<a class="btn btn-primary" href="#/units"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>重选单元</a>
 		<a class="btn btn-primary" href="#/type1"><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span>开始学习</a>
 	</nav>
 	<div>
 		<ul class="word-list">
-			<li ng-repeat="word in wordList">
+			<li ng-repeat="word in wordList" ng-class="{'word-on': word.learnState}">
 				{{word.word}}
-				<div ng-show="hasLearned" class="word-choose-state">
-					<span ng-class="{'word-on': word.learnState}">{{word.text}}<em></em></span>
+				<div ng-show="hasLearned" class="word-choose-state" ng-click="changeWordState(word.word)">
+					<em></em>
 				</div>
 			</li>
 		</ul>

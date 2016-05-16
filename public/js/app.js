@@ -39,7 +39,7 @@ selectApp. config(['$routeProvider', function($routeProvider) {
 	}).when('/parts/:uid', {
 		templateUrl: './templates/parts.html',
 		controller: 'partsCtrl'
-	}).when('/word-list/:uid', {
+	}).when('/word-list', {
 		templateUrl: './templates/word-list.html',
 		controller: 'wordListCtrl'
 	}).when('/info', {
