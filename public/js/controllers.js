@@ -24,22 +24,29 @@ mainControllers.controller('registerCtrl', ['$scope', function($scope) {
 /**
  * [selectControllers控制器]
  */
-selectControllers.controller('booksCtrl', ['$scope', '$rootScope', '$http', function($scope, $rootScope, $http) {
+selectControllers.controller('booksCtrl', ['$scope', '$rootScope', '$http', 'selectInfo', '$location', function($scope, $rootScope, $http, selectInfo, $location) {
 	$rootScope.moduleTitle = '教材选择';
+
 	$http.post('/select/books_info').then(function(res) {
 		$scope.books = res.data;
 	});
+
+	$scope.chooseBook = function(event, bookId) {
+		selectInfo.setCurBookId(bookId);
+	};
 }]);
 
-selectControllers.controller('unitsCtrl', ['$scope', '$rootScope', '$http', '$routeParams', function($scope, $rootScope, $http, $routeParams) {
+selectControllers.controller('unitsCtrl', ['$scope', '$rootScope', '$http', '$routeParams', 'selectInfo', function($scope, $rootScope, $http, $routeParams, selectInfo) {
 	$rootScope.moduleTitle = '单元选择';
-	$scope.curBookId = $routeParams.bookId;
-	$http.post('/select/choose_book').then(function(res) {
+	$scope.curBookId = selectInfo.getCurBookId();
+
+	$http.post('/select/choose_book', {bookId: $scope.curBookId}).then(function(res) {
 		$scope.units = res.data.units;
 		angular.forEach($scope.units, function(item, index, arr) {
 			arr[index].progress = parseInt(item.hasLearned / item.total * 100, 10);
 		});
 	});
+
 
 }]);
 

@@ -10,6 +10,14 @@ router.get('/', function(req, res) {
 	res.render('select');
 });
 
+router.get('/user_select_info', function(req, res) {
+	res.status(200).json({
+		userName: 'Lesty',
+		curBookId: 2,
+		curUnitId: 1
+	});
+});
+
 router.post('/books_info', function(req, res) {
 	res.status(200).json([
 		{

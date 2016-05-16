@@ -10,7 +10,8 @@ var mainApp = angular.module('mainApp', [
 var selectApp = angular.module('selectApp', [
 		'ngRoute',
 		'ngAnimate',
-		'selectControllers'
+		'selectControllers',
+		'globalInfoServices'
 	]);
 
 mainApp.config(['$routeProvider', function($routeProvider) {
@@ -32,7 +33,7 @@ selectApp. config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/books', {
 		templateUrl: './templates/books.html',
 		controller: 'booksCtrl'
-	}).when('/units/:bookId', {
+	}).when('/units', {
 		templateUrl: './templates/units.html',
 		controller: 'unitsCtrl'
 	}).when('/parts/:uid', {
@@ -49,6 +50,13 @@ selectApp. config(['$routeProvider', function($routeProvider) {
 	});
 }]);
 
-selectApp.run(['$rootScope', '$http', function($rootScope, $http) {
-	$rootScope.userName = 'Lesty';
+selectApp.run(['$rootScope', '$http', 'selectInfo', function($rootScope, $http, selectInfo) {
+	$http.get('/select/user_select_info', {params: {
+		date: +new Date()
+	}}).then(function(res) {
+		var data = res.data;
+		$rootScope.userName = data.userName;
+		selectInfo.setCurBookId(data.curBookId);
+		selectInfo.setCurUnitId(data.curUnitId);
+	});
 }]);
