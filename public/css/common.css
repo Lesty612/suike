@@ -1,0 +1,80 @@
+html, body {
+	height: 100%;
+	font-family: 'SimHei',"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+/**
+ * [因为有bootstrap,所以要确保ng-clock生效]
+ */
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+/**
+ * 公用部分内容
+ */
+.main-bg {
+	color: #fff;
+	background-color: #fff;
+}
+
+.main-contain {
+	position: relative;
+	text-align: center;
+}
+
+.main-head {
+	background-color: #333;
+	padding: 10px 10px 0;
+}
+
+.main-title {
+	margin-top: 10px;
+	font-weight: bold;
+	letter-spacing: 0.2em;
+}
+
+.main-title > a {
+	color: #31708f;
+	text-decoration: none;
+}
+
+.module-title {
+	margin-bottom: 6px;
+}
+
+.info-nav {
+	position: absolute;
+	top: 10px;
+	right: 2%;
+
+	font-size: 15px;
+}
+
+@media(min-width: 768px) {
+	.info-nav {
+		top: 20px;
+		right: 6%;
+
+		font-size: 16px;
+	}
+}
+
+.to-cursor {
+	cursor: pointer;
+}
+
+.to-cursor:hover {
+	color: #ccc;
+}
+
+.to-right {
+	left: auto;
+	min-width: auto;
+	right: 0;
+	text-align: center;
+}
+
+.sel-contain {
+	color: #000;
+}

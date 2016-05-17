@@ -1,84 +1,3 @@
-html, body {
-	height: 100%;
-	font-family: 'SimHei',"Helvetica Neue",Helvetica,Arial,sans-serif;
-}
-
-/**
- * [因为有bootstrap,所以要确保ng-clock生效]
- */
-[ng\:cloak], [ng-cloak], .ng-cloak {
-  display: none !important;
-}
-
-/**
- * [select.html主页面]
- */
-.main-bg {
-	color: #fff;
-	background-color: #fff;
-}
-
-.main-contain {
-	position: relative;
-	text-align: center;
-}
-
-.main-head {
-	background-color: #333;
-	padding: 10px 10px 0;
-}
-
-.main-title {
-	margin-top: 10px;
-	font-weight: bold;
-	letter-spacing: 0.2em;
-}
-
-.main-title > a {
-	color: #31708f;
-	text-decoration: none;
-}
-
-.module-title {
-	margin-bottom: 6px;
-}
-
-.info-nav {
-	position: absolute;
-	top: 10px;
-	right: 2%;
-
-	font-size: 15px;
-}
-
-@media(min-width: 768px) {
-	.info-nav {
-		top: 20px;
-		right: 6%;
-
-		font-size: 16px;
-	}
-}
-
-.to-cursor {
-	cursor: pointer;
-}
-
-.to-cursor:hover {
-	color: #ccc;
-}
-
-.to-right {
-	left: auto;
-	min-width: auto;
-	right: 0;
-	text-align: center;
-}
-
-.sel-contain {
-	color: #000;
-}
-
 /**
  * [books页面]
  */
@@ -87,8 +6,15 @@ html, body {
 	position: relative;
 }
 
+@media(min-width: 768px) {
+	.section-contain {
+		width: 60%;
+		margin: 0 auto;
+	}
+}
+
 .book-name {
-	margin: 25px auto 0;
+	position: relative;
 }
 
 .book-name > a {
@@ -97,16 +23,12 @@ html, body {
 
 	font-size: 17px;
 	font-weight: bold;
+
 	cursor: pointer;
 	text-decoration: none;
 }
 
 @media(min-width: 768px) {
-	.book-name {
-		width: 60%;
-		margin-top: 40px;
-	}
-
 	.book-name > a {
 		font-size: 19px;
 		padding: 10px;
@@ -118,7 +40,12 @@ html, body {
 }
 
 .book-progress {
-	margin: 0 auto;
+	position: relative;
+	margin-bottom: 25px;
+}
+
+.section-contain > div:last-child > .book-progress {
+	margin-bottom: 0;
 }
 
 .progress-to-center {
@@ -134,13 +61,13 @@ html, body {
 
 @media(min-width: 768px) {
 	.book-progress {
-		width: 60%;
 		height: 30px;
+		margin-bottom: 40px;
 	}
 
 	.progress-to-center {
 		line-height: 30px;
-		font-size: 15px;
+		font-size: 16px;
 	}
 }
 
@@ -148,23 +75,19 @@ html, body {
  * [units页面]
  */
 .back-nav {
-	position: absolute;
-	top: -20px;
-	left: auto;
-	right: 2%;
+	text-align: right;
+	padding-right: 2%;
 }
 
 .back-nav > a {
-	font-size: 17px;
+	font-size: 18px;
 	text-decoration: none;
 }
 
 @media(min-width: 768px) {
 	.back-nav {
-		position: absolute;
-		top: -30px;
-		right: auto;
-		left: 20%;
+		text-align: left;
+		padding-right: 0;
 	}
 
 	.back-nav > a {
@@ -190,18 +113,14 @@ html, body {
 @media(min-width: 768px) {
 	.word-btn-group {
 		padding: 10px;
-		width: 60%;
-		margin: 0 auto;
 	}
 
 	.word-btn-group > a {
-		width: 30%;
 		font-size: 18px;
 	}
 }
 
 .word-list {
-	margin: 0 auto;
 	padding-left: 0;
 	list-style: none;
 	text-align: center;
@@ -211,17 +130,13 @@ html, body {
 	position: relative;
 	margin: 0px 5%;
 	padding: 10px 5px;
-	border-bottom: solid 1px #ccc;
+	border-bottom: 1px solid #ccc;
 	font-size: 17px;
 	font-weight: bold;
 	color: #ccc;
 }
 
 @media(min-width: 768px) {
-	.word-list {
-		width: 60%;
-	}
-
 	.word-list > li {
 		padding: 15px 5px;
 		font-size: 19px;
@@ -273,4 +188,50 @@ html, body {
 li.word-on > .word-choose-state > em{
 	left: 32px;
 	background-color: #4CDE1C;
+}
+
+.alert-clear-bottom {
+	margin-bottom: 0;
+}
+
+.fade-in {
+	-webkit-animation: 0.5s fade-in;
+	-moz-animation: 0.5s fade-in;
+	-o-animation: 0.5s fade-in;
+	animation: 0.5s fade-in;
+	z-index: 100;
+}
+
+.fade-out {
+	-webkit-animation: 0.5s fade-out;
+	-moz-animation: 0.5s fade-out;
+	-o-animation: 0.5s fade-out;
+	animation: 0.5s fade-out;
+	z-index: 99;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; display: block; }
+  to { opacity: 1; }
+}
+@-moz-keyframes fade-in {
+  from { opacity: 0; display: block; }
+  to { opacity: 1; }
+}
+@-webkit-keyframes fade-in {
+  from { opacity: 0; display: block; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; display: none; }
+}
+@-moz-keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; display: none; }
+}
+@-webkit-keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; display: none; }
 }

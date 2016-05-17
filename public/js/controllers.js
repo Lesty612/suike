@@ -3,8 +3,10 @@
  * @author Lesty
  * @codeDate 2016.5.10
  */
-var mainControllers = angular.module('mainControllers', []);
-var selectControllers = angular.module('selectControllers', []);
+var mainControllers = angular.module('mainControllers', []),
+	selectControllers = angular.module('selectControllers', []),
+	typeControllers = angular.module('typeControllers', []);
+
 
 /**
  * [mainControllers控制器]
@@ -59,15 +61,35 @@ selectControllers.controller('partsCtrl', ['$scope', '$rootScope', function($sco
 selectControllers.controller('wordListCtrl', ['$scope', '$rootScope', '$http', '$routeParams', 'selectInfo', function($scope, $rootScope, $http, $routeParams, selectInfo) {
 	$rootScope.moduleTitle = '单词列表';
 	$scope.uid = selectInfo.getCurUnitId();
+	// 用户是否已经学过该部分
+	$scope.hasLearned = false;
+	// 根据isAlert判断警告框是否弹出
+	$scope.isAlert = false;
+	// 提示语句
+	$scope.alertSentence = '';
 
 	// 带上日期参数，避免缓存
 	$http.get('/select/choose_part', {params: {
 		uid: $scope.uid,
 		date: +new Date()
 	}}).then(function(res) {
+		let tmpWord = null;
+
 		$scope.wordList = res.data;
 		// 遍历分数,如果有分数就为false(现在还没弄)
-		$scope.hasLearned = true;
+		
+		// 如果做题次数，则代表学过，
+		for(let i = $scope.wordList.length; i--;) {
+			tmpWord = $scope.wordList[i];
+
+			if(tmpWord.dt !== 0) {
+				$scope.hasLearned = true;
+				// 弹出提示
+				$scope.isAlert = true;
+				$scope.alertSentence = '亲，您已学过一部分该单元内容，不能更改单词学习状态了哦T_T';
+				break;
+			}
+		}
 	});
 
 	/**
@@ -76,18 +98,50 @@ selectControllers.controller('wordListCtrl', ['$scope', '$rootScope', '$http', '
 	 */
 	$scope.changeWordState = function(word) {
 		// 临时对象
-		var tmpWord = null;
+		let tmpWord = null;
 
-		for(var i = $scope.wordList.length; i--;) {
+		for(let i = $scope.wordList.length; i--;) {
 			tmpWord = $scope.wordList[i];
 			if(tmpWord.word === word) {
+				// 修改学习状态
 				$scope.wordList[i].learnState = !tmpWord.learnState;
+
+				// 发送修改请求
+				$http.post('/select/change_learn_state', {
+					id: tmpWord.id,
+					learnState: $scope.wordList[i].learnState
+				}).then(function(res) {
+					// do some thing with res.data
+				}, function(err) {
+					// 请求出错，弹出警告框
+					$scope.isAlert = true;
+					$scope.alertSentence = '亲，您的网络状况不佳T_T';
+				});
+
 				break;
 			}
 		}
-	}
+	};
+
+	/**
+	 * [closeAlert 关闭警告框]
+	 */
+	$scope.closeAlert = function() {
+		$scope.isAlert = false;
+	};
 }]);
 
 selectControllers.controller('infoCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
 	$rootScope.moduleTitle = '个人中心';
+}]);
+
+/**
+ * [typeControllers控制器]
+ */
+typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+	$rootScope.moduleTitle = '单元学习';
+}]);
+
+typeControllers.controller('endCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+	$rootScope.moduleTitle = '学习完成';
 }]);

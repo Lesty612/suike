@@ -84,24 +84,28 @@ router.get('/choose_unit', function(req, res) {
 router.get('/choose_part', function(req, res) {
 	res.status(200).json([
 		{
+			id: 1,
 			word: "hello",
 			learnState: true,
-			score: 0
+			dt: 0
 		},
 		{
+			id: 2,
 			word: "good",
 			learnState: true,
-			score: 1
+			dt: 0
 		},
 		{
+			id: 3,
 			word: "break",
 			learnState: false,
-			score: 0
+			dt: 0
 		},
 		{
+			id: 4,
 			word: "controller",
 			learnState: true,
-			score: 2
+			dt: 0
 		}
 	]);
 });

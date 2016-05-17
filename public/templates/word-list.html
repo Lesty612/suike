@@ -1,13 +1,17 @@
 <section class="section-contain">
 	<nav class="word-btn-group">
 		<a class="btn btn-primary" href="#/units"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>重选单元</a>
-		<a class="btn btn-primary" href="#/type"><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span>开始学习</a>
+		<a class="btn btn-primary" href="/type"><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span>开始学习</a>
 	</nav>
+	<div class="alert alert-danger alert-dismissible alert-clear-bottom" ng-class="{true: 'fade-in', false: 'fade-out'}[isAlert]" role="alert" ng-show="isAlert">
+	  <button type="button" class="close" aria-label="Close alert" ng-click="closeAlert()"><span aria-hidden="true">&times;</span></button>
+	  <strong>Warning!</strong> {{alertSentence}}
+	</div>
 	<div>
 		<ul class="word-list">
 			<li ng-repeat="word in wordList" ng-class="{'word-on': word.learnState}">
 				{{word.word}}
-				<div ng-show="hasLearned" class="word-choose-state" ng-click="changeWordState(word.word)">
+				<div ng-show="!hasLearned" class="word-choose-state" ng-click="changeWordState(word.word)">
 					<em></em>
 				</div>
 			</li>

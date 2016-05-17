@@ -7,6 +7,7 @@ var mainApp = angular.module('mainApp', [
 		'ngRoute',
 		'mainControllers'
 	]);
+
 var selectApp = angular.module('selectApp', [
 		'ngRoute',
 		'ngAnimate',
@@ -14,6 +15,15 @@ var selectApp = angular.module('selectApp', [
 		'globalInfoServices'
 	]);
 
+var typeApp = angular.module('typeApp', [
+		'ngRoute',
+		'typeControllers',
+		'globalInfoServices'
+	]);
+
+/**
+ * [mainApp 配置]
+ */
 mainApp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/welcome', {
 		templateUrl: './templates/welcome.html',
@@ -29,6 +39,9 @@ mainApp.config(['$routeProvider', function($routeProvider) {
 	});
 }]);
 
+/**
+ * [selectApp 配置]
+ */
 selectApp. config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/books', {
 		templateUrl: './templates/books.html',
@@ -51,6 +64,32 @@ selectApp. config(['$routeProvider', function($routeProvider) {
 }]);
 
 selectApp.run(['$rootScope', '$http', 'selectInfo', function($rootScope, $http, selectInfo) {
+	$http.get('/select/user_select_info', {params: {
+		date: +new Date()
+	}}).then(function(res) {
+		var data = res.data;
+		$rootScope.userName = data.userName;
+		selectInfo.setCurBookId(data.curBookId);
+		selectInfo.setCurUnitId(data.curUnitId);
+	});
+}]);
+
+/**
+ * [typeApp 配置]
+ */
+typeApp.config(['$routeProvider', function($routeProvider) {
+	$routeProvider.when('/do-type', {
+		templateUrl: './templates/do-type.html',
+		controller: 'doTypeCtrl'
+	}).when('./end', {
+		templateUrl: './templates/end.html',
+		controller: 'endCtrl'
+	}).otherwise({
+		redirectTo: '/do-type'
+	});
+}]);
+
+typeApp.run(['$rootScope', '$http', function($rootScope, $http) {
 	$http.get('/select/user_select_info', {params: {
 		date: +new Date()
 	}}).then(function(res) {
