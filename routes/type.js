@@ -15,29 +15,81 @@ router.get('/get_words_detail', function(req, res) {
 		{
 			id: 1,
 			word: "hello",
+			wordAudio: 'hello.mp3',
+			wordMean: 'int. 喂;哈罗',
 			learnState: true,
 			score: 0,
+			sentence: 'hello world',
+			sentenceAudio: './audios/hello-world.mp3',
+			sentenceMean: '你好，世界！',
+			// type1 picture
+			p1: './imgs/hello-world.jpg',			
+			// type2 picture
+			p2: './imgs/hello-world.jpg',
 			dt: 0
 		},
 		{
 			id: 2,
 			word: "good",
+			wordAudio: 'hello.mp3',
+			wordMean: 'int. 喂;哈罗',
 			learnState: true,
 			score: 1,
-			dt: 0
+			sentence: 'good morning',
+			sentenceAudio: './audios/hello-world.mp3',
+			sentenceMean: '你好，世界！',
+			// type1 picture
+			p1: './imgs/hello-world.jpg',			
+			// type2 picture
+			p2: './imgs/hello-world.jpg',
+			dt: 2
 		},
 		{
 			id: 3,
 			word: "break",
+			wordAudio: 'hello.mp3',
+			wordMean: 'int. 喂;哈罗',
 			learnState: false,
 			score: 0,
+			sentence: 'break it',
+			sentenceAudio: './audios/hello-world.mp3',
+			sentenceMean: '你好，世界！',
+			// type1 picture
+			p1: './imgs/hello-world.jpg',			
+			// type2 picture
+			p2: './imgs/hello-world.jpg',
 			dt: 0
 		},
 		{
 			id: 4,
 			word: "controller",
+			wordAudio: 'hello.mp3',
+			wordMean: 'int. 喂;哈罗',
 			learnState: true,
-			score: 2,
+			score: 0,
+			sentence: 'There are some controllers',
+			sentenceAudio: './audios/hello-world.mp3',
+			sentenceMean: '你好，世界！',
+			// type1 picture
+			p1: './imgs/hello-world.jpg',			
+			// type2 picture
+			p2: './imgs/hello-world.jpg',
+			dt: 0
+		},
+		{
+			id: 5,
+			word: "book",
+			wordAudio: 'hello.mp3',
+			wordMean: 'int. 喂;哈罗',
+			learnState: true,
+			score: 0,
+			sentence: 'There are so many book',
+			sentenceAudio: './audios/hello-world.mp3',
+			sentenceMean: '你好，世界！',
+			// type1 picture
+			p1: './imgs/hello-world.jpg',			
+			// type2 picture
+			p2: './imgs/hello-world.jpg',
 			dt: 0
 		}
 	]);

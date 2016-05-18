@@ -3,7 +3,8 @@ var express = require('express'),
     multer = require('multer'),
     userRoutes = require('./routes/user'),
     selectRoutes = require('./routes/select'),
-    typeRoutes = require('./routes/type');
+    typeRoutes = require('./routes/type'),
+    favicon = require('serve-favicon');
     path = require('path');
 
 /**
@@ -17,6 +18,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 // 设置静态文件夹路径
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(favicon(path.join(__dirname, 'public', 'imgs', 'favicon.ico')));
 
 // 设置渲染引擎
 app.set('view engine', 'html');

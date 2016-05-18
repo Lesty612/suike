@@ -138,8 +138,45 @@ selectControllers.controller('infoCtrl', ['$scope', '$rootScope', function($scop
 /**
  * [typeControllers控制器]
  */
-typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'selectInfo', 'Types', function($scope, $rootScope, $http, selectInfo, Types) {
 	$rootScope.moduleTitle = '单元学习';
+
+	let curIndex = 0,
+		data = 0;
+
+	$http.get('/type/get_words_detail', {
+		params: {
+			date: +new Date()
+		}
+	}).then(function(res) {
+		data = Types.deepCopy(res.data);
+
+		angular.forEach(data, function(item, index, arr) {
+			// 如果不学该单词，则删除
+			if(item.learnState === false || item.scope === 3) {
+				arr.splice(index, 1);
+			}
+
+			Types.createRandomPic(res.data, arr[index]);
+			Types.createRandomMean(res.data, arr[index]);
+		});
+
+		$scope.curWord = data[curIndex];
+		switch ($scope.curWord.score) {
+			case 0:
+				$scope.curType = 'type1';
+				break;
+			case 1:
+				$scope.curType = 'type2';
+				break;
+			case 2:
+				$scope.curType = 'type3';
+				break;
+			default:
+				$scope.curType = 'type1';
+				break;
+		}
+	});
 }]);
 
 typeControllers.controller('endCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {

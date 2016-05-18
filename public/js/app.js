@@ -18,7 +18,9 @@ var selectApp = angular.module('selectApp', [
 var typeApp = angular.module('typeApp', [
 		'ngRoute',
 		'typeControllers',
-		'globalInfoServices'
+		'globalInfoServices',
+		'typeDirectives',
+		'typeServices'
 	]);
 
 /**
@@ -89,11 +91,11 @@ typeApp.config(['$routeProvider', function($routeProvider) {
 	});
 }]);
 
-typeApp.run(['$rootScope', '$http', function($rootScope, $http) {
+typeApp.run(['$rootScope', '$http', 'selectInfo', function($rootScope, $http, selectInfo) {
 	$http.get('/select/user_select_info', {params: {
 		date: +new Date()
 	}}).then(function(res) {
-		var data = res.data;
+		let data = res.data;
 		$rootScope.userName = data.userName;
 		selectInfo.setCurBookId(data.curBookId);
 		selectInfo.setCurUnitId(data.curUnitId);

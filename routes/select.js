@@ -106,6 +106,12 @@ router.get('/choose_part', function(req, res) {
 			word: "controller",
 			learnState: true,
 			dt: 0
+		},
+		{
+			id: 5,
+			word: "book",
+			learnState: true,
+			dt: 0
 		}
 	]);
 });

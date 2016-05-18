@@ -5,9 +5,10 @@
  */
 
 var globalInfoServices = angular.module('globalInfoServices', []);
+var typeServices = angular.module('typeServices', []);
 
 globalInfoServices.factory('selectInfo', function() {
-	var curBookId = 0, // 当前所选的教材ID
+	let curBookId = 0, // 当前所选的教材ID
 		curUnitId = 0, // 当前所选单元ID
 		curPart = 0; // 当前所选部分
 
@@ -45,5 +46,108 @@ globalInfoServices.factory('selectInfo', function() {
 		setCurUnitId: setCurUnitId,
 		getCurPart: getCurPart,
 		setCurPart: setCurPart
+	};
+});
+
+typeServices.factory('Types', function() {
+	// 预备的干扰图
+	let fallbackPic = [
+	    'http://pic1.hebei.com.cn/0/12/05/25/12052571_010153.jpg',
+	    'http://img5.imgtn.bdimg.com/it/u=1442159604,838517873&fm=21&gp=0.jpg',
+	    'http://d03.res.meilishuo.net/pic/_o/59/db/ece7c364542204213522e5b503dd_600_600.c1.jpg',
+	    'http://d01.res.meilishuo.net/pic/_o/b2/5c/145fa608d3c2e50842b75fe03802_800_800.jpg',
+	    'http://i.zeze.com/attachment/forum/201508/10/130318ay5k9iyblyvzby8w.jpg',
+	    'http://pic.58pic.com/58pic/13/28/85/66m58PICVed_1024.jpg'
+	];
+
+	// 预备的干扰词
+	let fallbackMean = [
+		'n. 插座',
+		'v. 奔跑;跑',
+		'adj. 崩溃的',
+		'adj. 紧急',
+		'n. 睡袋',
+		'v. 释放;解除'
+	];
+
+	/**
+	 * [createRandomPic 为当前对象添加随机干扰图]
+	 * @param  {Array} data   [所有单词的详细信息]
+	 * @param  {Array} newObj [要添加干扰图的对象]
+	 */
+	function createRandomPic (data, newObj) {
+	    let i = 1,
+	    	// 干扰选项所在位置
+	    	randNum = 0,
+	    	// 正确选项所在位置
+	    	randOption = Math.floor(Math.random() * 4) + 1,
+			randList = new Object();
+
+	    // 保存正确选项
+	    newObj["picOption" + randOption] = newObj.p2;
+
+	    while (i < 5) {
+	        // 如果i索引到了正确项所在位置，则跳过，并指向下一个选项位置
+	        if (i == randOption) {
+	            i++;
+	            continue;
+	        }
+
+	        // 获取[0~数据长度)间随机整数，用于筛选干扰图
+	        randNum = Math.floor(Math.random() * (data.length >= 5 ? data.length: fallbackPic.length));
+	        // 判断干扰图是否已被选择过
+	        if (randNum in randList) {
+	            continue;
+	        }
+
+	        randList[randNum] = randNum;
+	        // 保存干扰图
+	        newObj["picOption" + i] = (data.length >= 5 ? data[randNum].p2 : fallbackPic[randNum]);
+
+	        i++;
+	    }
+	};
+
+	function createRandomMean (data, newObj) {
+	    let i = 1,
+	    	// 干扰选项所在位置
+	    	randNum = 0,
+	    	// 正确选项所在位置
+	    	randOption = Math.floor(Math.random() * 4) + 1,
+			randList = new Object();
+
+	    // 保存正确选项
+	    newObj["meanOption" + randOption] = newObj.wordMean;
+
+	    while (i < 5) {
+	        // 如果i索引到了正确项所在位置，则跳过，并指向下一个选项位置
+	        if (i == randOption) {
+	            i++;
+	            continue;
+	        }
+
+	        // 获取[0~数据长度)间随机整数，用于筛选干扰项
+	        randNum = Math.floor(Math.random() * (data.length >= 5 ? data.length: fallbackMean.length));
+	        // 判断干扰项是否已被选择过
+	        if (randNum in randList) {
+	            continue;
+	        }
+
+	        randList[randNum] = randNum;
+	        // 保存干扰项
+	        newObj["meanOption" + i] = (data.length >= 5 ? data[randNum].wordMean : fallbackMean[randNum]);
+
+	        i++;
+	    }
+	};
+
+	function deepCopy(obj) {
+		return JSON.parse(JSON.stringify(obj));
+	}
+
+	return {
+		createRandomPic: createRandomPic,
+		createRandomMean: createRandomMean,
+		deepCopy: deepCopy
 	};
 });
