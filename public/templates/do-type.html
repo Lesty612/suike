@@ -1,3 +1,8 @@
-<div>
-	<div st-type1 ng-if="curType === 'type1'"></div>
-</div>
+<section class="type-contain">
+	<nav class="back-nav do-type-back">
+		<a href="/select"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Back</a>
+	</nav>
+	<st-type1 ng-if="curType === 'type1'"></st-type1>
+	<st-type2 ng-if="curType === 'type1'"></st-type1>
+	<st-type3 ng-if="curType === 'type1'"></st-type1>
+</section>

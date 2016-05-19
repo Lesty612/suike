@@ -141,8 +141,9 @@ selectControllers.controller('infoCtrl', ['$scope', '$rootScope', function($scop
 typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'selectInfo', 'Types', function($scope, $rootScope, $http, selectInfo, Types) {
 	$rootScope.moduleTitle = '单元学习';
 
-	let curIndex = 0,
-		data = 0;
+	let curIndex = -1,
+		data = 0,
+		dataLen = 0;
 
 	$http.get('/type/get_words_detail', {
 		params: {
@@ -157,11 +158,26 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 				arr.splice(index, 1);
 			}
 
+			// 创建干扰项
 			Types.createRandomPic(res.data, arr[index]);
 			Types.createRandomMean(res.data, arr[index]);
 		});
 
-		$scope.curWord = data[curIndex];
+		dataLen = data.length;
+
+		$scope.toNextWord();
+	});
+
+
+	/**
+	 * [toNextType 跳到下一题型]
+	 */
+	$scope.toNextType = function() {
+		if($scope.curType === 'type3') {
+			$scope.toNextWord();
+		} else {
+
+		}
 		switch ($scope.curWord.score) {
 			case 0:
 				$scope.curType = 'type1';
@@ -173,10 +189,22 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 				$scope.curType = 'type3';
 				break;
 			default:
-				$scope.curType = 'type1';
+				console.log('score不合法!');
 				break;
 		}
-	});
+	};
+
+	/**
+	 * [toNextWord 跳转到下一题型]
+	 */
+	$scope.toNextWord = function() {
+		if(++curIndex < dataLen) {
+			$scope.curWord = data[curIndex];
+			$scope.toNextType();
+		} else {
+			// 跳转
+		}		
+	}
 }]);
 
 typeControllers.controller('endCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {

@@ -2,3 +2,82 @@
  * do-type页面
  */
 
+.type-contain {
+	position: relative;
+}
+
+.do-type-back {
+	font-size: 30px;
+	margin: 10px 0 12%;
+}
+
+.do-type-back > a {
+	font-size: 21px;
+}
+
+@media(min-width: 768px) {
+	.type-contain {
+		width: 50%;
+		margin: 0 auto;
+	}
+
+	.do-type-back {
+		margin: 20px 0 5%;
+	}
+}
+
+/**
+ * [type1页面]
+ */
+.highlight-word {
+	color: #63D0FF;
+	font-size: 27px;
+}
+
+.t1-audio {
+	font-size: 30px;
+	cursor: pointer;
+}
+
+.t1-nav {
+	position: fixed;
+	right: 2%;
+	top: 50%;
+
+	-moz-transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+.t1-to-next {
+	font-size: 30px;
+	cursor: pointer;
+}
+
+@media(min-width: 768px) {
+	.t1-nav {
+		right: 25%;
+	}
+
+	.t1-to-next {
+		font-size: 36px;
+	}
+}
+
+.t1-img-box {
+	margin-bottom: 20px;
+}
+
+.t1-img-box > img {
+	width: 70%;
+	height: 220px;
+}
+
+@media(min-width: 768px) {
+	.t1-img-box > img {
+		width: 70%;
+		height: 280px;
+	}
+}
