@@ -75,9 +75,23 @@
 	height: 220px;
 }
 
+.alert-fix-bottom {
+	position: fixed;
+	width: 100%;
+	bottom: 10%;
+}
+
 @media(min-width: 768px) {
 	.t1-img-box > img {
 		width: 70%;
 		height: 280px;
 	}
+
+	.alert-fix-bottom {
+		width: 50%;
+	}
 }
+
+/**
+ * [type2页面]
+ */

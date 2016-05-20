@@ -140,16 +140,20 @@ selectControllers.controller('infoCtrl', ['$scope', '$rootScope', function($scop
  */
 typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'selectInfo', 'Types', function($scope, $rootScope, $http, selectInfo, Types) {
 	$rootScope.moduleTitle = '单元学习';
+	$scope.isAlert = false;
 
-	let curIndex = -1,
-		data = 0,
-		dataLen = 0;
+	let curIndex = -1, // 当前单词位置索引
+		data = 0, // 所有单词详细信息[数组]
+		dataLen = 0, // 单词数量
+		dt = 0; // 做题次数
 
 	$http.get('/type/get_words_detail', {
 		params: {
 			date: +new Date()
 		}
 	}).then(function(res) {
+		$scope.isAlert = true;
+		$scope.alertSentence = '亲，数据加载失败啦~请您刷新页面重试T_T';
 		data = Types.deepCopy(res.data);
 
 		angular.forEach(data, function(item, index, arr) {
@@ -165,46 +169,85 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 
 		dataLen = data.length;
 
+		// 载入第一个单词
 		$scope.toNextWord();
+	}, function(err) {
+		$scope.isAlert = true;
+		$scope.alertSentence = '亲，数据加载失败啦~请您刷新页面重试T_T';
 	});
 
 
 	/**
 	 * [toNextType 跳到下一题型]
+	 * @nextType {String} [如果指定了nextType，则按照nextType出题]
 	 */
-	$scope.toNextType = function() {
-		if($scope.curType === 'type3') {
-			$scope.toNextWord();
+	$scope.toNextType = function(nextType) {
+		if(nextType != null) {
+			$scope.curType = nextType;
 		} else {
-
-		}
-		switch ($scope.curWord.score) {
-			case 0:
-				$scope.curType = 'type1';
-				break;
-			case 1:
-				$scope.curType = 'type2';
-				break;
-			case 2:
-				$scope.curType = 'type3';
-				break;
-			default:
-				console.log('score不合法!');
-				break;
+			if($scope.curType === 'type3') {
+				$scope.toNextWord();
+			} else {
+				$scope.curType = 'type' + (parseInt($scope.curType.slice($scope.curType.length - 1), 10) + 1);
+			}
 		}
 	};
 
 	/**
-	 * [toNextWord 跳转到下一题型]
+	 * [toNextWord 跳转到下一单词]
 	 */
 	$scope.toNextWord = function() {
+		// 下一个题型
+		let nextType = '';
+
+		// 跳到下一单词时，将当前单词学习情况发送到后台
+		if(curIndex >= 0) {
+			$http.post('/type/update_done_date', {
+				id: data[curIndex].id,
+				dt: dt
+			}).then(function(res) {
+				// success
+			}, function(err) {
+				$scope.isAlert = true;
+				$scope.alertSentence = '亲，您的网络状况不佳，学习数据可能保存失败哦T_T';
+			});
+		}
+
 		if(++curIndex < dataLen) {
 			$scope.curWord = data[curIndex];
-			$scope.toNextType();
+			dt = 0;
+
+			// 根据单词分数判断题型
+			switch ($scope.curWord.score) {
+				case 0:
+					nextType = 'type1';
+					break;
+				case 1:
+					nextType = 'type2';
+					break;
+				case 2:
+					nextType = 'type3';
+					break;
+				default:
+					console.log('score不合法!');
+					break;
+			}
+
+			$scope.toNextType(nextType);
 		} else {
-			// 跳转
+			// 显示结束页面
+			$scope.curType = 'end';
+			dt = 0;
+			curIndex = -1;
 		}		
 	}
+
+	/**
+	 * [closeAlert 关闭警告框]
+	 */
+	$scope.closeAlert = function() {
+		$scope.isAlert = false;
+	};
 }]);
 
 typeControllers.controller('endCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {

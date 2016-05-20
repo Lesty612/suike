@@ -3,6 +3,11 @@
 		<a href="/select"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> Back</a>
 	</nav>
 	<st-type1 ng-if="curType === 'type1'"></st-type1>
-	<st-type2 ng-if="curType === 'type1'"></st-type1>
-	<st-type3 ng-if="curType === 'type1'"></st-type1>
+	<st-type2 ng-if="curType === 'type2'"></st-type2>
+	<st-type3 ng-if="curType === 'type3'"></st-type3>
+	<st-end ng-if="curType === 'end'"></st-end>
+	<div class="alert alert-danger alert-dismissible alert-fix-bottom" ng-class="{true: 'fade-in', false: 'fade-out'}[isAlert]" role="alert" ng-show="isAlert">
+	  <button type="button" class="close" aria-label="Close alert" ng-click="closeAlert()"><span aria-hidden="true">&times;</span></button>
+	  <strong>Warning!</strong> {{alertSentence}}
+	</div>
 </section>

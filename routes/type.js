@@ -95,7 +95,7 @@ router.get('/get_words_detail', function(req, res) {
 	]);
 });
 
-router.get('/update_done_date', function(req, res) {
+router.post('/update_done_date', function(req, res) {
     res.status(200).json({
     	status: true
     });
