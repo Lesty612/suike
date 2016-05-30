@@ -26,10 +26,10 @@ mainControllers.controller('registerCtrl', ['$scope', function($scope) {
 /**
  * [selectControllers控制器]
  */
-selectControllers.controller('booksCtrl', ['$scope', '$rootScope', '$http', 'selectInfo', '$location', function($scope, $rootScope, $http, selectInfo, $location) {
+selectControllers.controller('booksCtrl', ['$scope', '$rootScope', '$http', 'selectInfo', function($scope, $rootScope, $http, selectInfo) {
 	$rootScope.moduleTitle = '教材选择';
 
-	$http.post('/select/books_info').then(function(res) {
+	$http.get('/select/books_info').then(function(res) {
 		$scope.books = res.data;
 	});
 

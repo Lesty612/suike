@@ -101,12 +101,4 @@ router.post('/update_done_date', function(req, res) {
     });
 });
 
-router.get('/books', function(req, res) {
-	res.send('user books');
-});
-
-router.get('/units', function(req, res) {
-	res.send('user units');
-});
-
 module.exports = router;

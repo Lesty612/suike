@@ -18,24 +18,28 @@ router.get('/user_select_info', function(req, res) {
 	});
 });
 
-router.post('/books_info', function(req, res) {
+router.get('/books_info', function(req, res) {
 	res.status(200).json([
 		{
+			id: 0,
 			name: '人教版第一册',
 			bookId: 1,
 			progress: '29'
 		},
 		{
+			id: 1,
 			name: '人教版第二册',
 			bookId: 2,
 			progress: '12'
 		},
 		{
+			id: 2,
 			name: '人教版第三册',
 			bookId: 3,
 			progress: '24'
 		},
 		{
+			id: 3,
 			name: '人教版第四册',
 			bookId: 4,
 			progress: '26'
@@ -80,6 +84,12 @@ router.get('/choose_unit', function(req, res) {
 		}
 	]);
 });
+
+[{
+	part: 1,
+	hasLearned: 2,
+	total: 15
+}]
 
 router.get('/choose_part', function(req, res) {
 	res.status(200).json([
