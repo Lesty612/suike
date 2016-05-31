@@ -4,7 +4,7 @@ var express = require('express'),
     userRoutes = require('./routes/user'),
     selectRoutes = require('./routes/select'),
     typeRoutes = require('./routes/type'),
-    favicon = require('serve-favicon');
+    favicon = require('serve-favicon'),
     path = require('path');
 
 /**
