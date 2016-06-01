@@ -15,7 +15,7 @@ router.get('/get_words_detail', function(req, res) {
 		{
 			id: 1,
 			word: "hello",
-			wordAudio: 'hello.mp3',
+			wordAudio: './audios/hello.mp3',
 			wordMean: 'int. 喂;哈罗',
 			learnState: true,
 			score: 0,
@@ -31,7 +31,7 @@ router.get('/get_words_detail', function(req, res) {
 		{
 			id: 2,
 			word: "good",
-			wordAudio: 'hello.mp3',
+			wordAudio: './audios/hello.mp3',
 			wordMean: 'int. 喂;哈罗',
 			learnState: true,
 			score: 1,
@@ -47,7 +47,7 @@ router.get('/get_words_detail', function(req, res) {
 		{
 			id: 3,
 			word: "break",
-			wordAudio: 'hello.mp3',
+			wordAudio: './audios/hello.mp3',
 			wordMean: 'int. 喂;哈罗',
 			learnState: false,
 			score: 0,
@@ -63,7 +63,7 @@ router.get('/get_words_detail', function(req, res) {
 		{
 			id: 4,
 			word: "controller",
-			wordAudio: 'hello.mp3',
+			wordAudio: './audios/hello.mp3',
 			wordMean: 'int. 喂;哈罗',
 			learnState: true,
 			score: 0,
@@ -79,7 +79,7 @@ router.get('/get_words_detail', function(req, res) {
 		{
 			id: 5,
 			word: "book",
-			wordAudio: 'hello.mp3',
+			wordAudio: './audios/hello.mp3',
 			wordMean: 'int. 喂;哈罗',
 			learnState: true,
 			score: 0,

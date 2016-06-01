@@ -29,6 +29,11 @@
 /**
  * [type1页面]
  */
+
+.type {
+	color: #666;
+}
+
 .highlight-word {
 	color: #63D0FF;
 	font-size: 27px;
@@ -95,3 +100,36 @@
 /**
  * [type2页面]
  */
+.pic-box {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.pic-box > ul {
+	margin-bottom: 0;
+	padding-left: 0;
+	/*取消行内元素间隙*/
+	font-size: 0;
+}
+
+.pic-item {
+	position: relative;
+	display: inline-block;
+	width: 49%;
+	padding: 10px 5px;
+
+	background-color: #f4efe5;
+	border-radius: 4px;
+}
+
+.pic-item > img {
+	width: 100%;
+}
+
+.error {
+	background-color: #f3c4b5;
+}
+
+.right {
+	background-color: #dcecb4;
+}

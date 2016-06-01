@@ -144,22 +144,24 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 
 	let curIndex = -1, // 当前单词位置索引
 		data = 0, // 所有单词详细信息[数组]
-		dataLen = 0, // 单词数量
-		dt = 0; // 做题次数
+		dataLen = 0, // 需要学习的单词数量
+		pTotal = 0, // 全部单词的数据数量
+		pCurCount = 0,	// 学完的单词数量(整单元)
+		dt = 0; // 做题次
 
 	$http.get('/type/get_words_detail', {
 		params: {
 			date: +new Date()
 		}
 	}).then(function(res) {
-		$scope.isAlert = true;
-		$scope.alertSentence = '亲，数据加载失败啦~请您刷新页面重试T_T';
 		data = Types.deepCopy(res.data);
+		pTotal = data.length;
 
 		angular.forEach(data, function(item, index, arr) {
 			// 如果不学该单词，则删除
 			if(item.learnState === false || item.scope === 3) {
 				arr.splice(index, 1);
+				pCurCount++;
 			}
 
 			// 创建干扰项
@@ -168,6 +170,8 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 		});
 
 		dataLen = data.length;
+
+		$scope.progress = parseInt(pCurCount / pTotal * 100, 10);
 
 		// 载入第一个单词
 		$scope.toNextWord();
@@ -179,13 +183,15 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 
 	/**
 	 * [toNextType 跳到下一题型]
-	 * @nextType {String} [如果指定了nextType，则按照nextType出题]
+	 * @nextType {String} [如果指定了nextType，则按照默认顺序出题]
 	 */
 	$scope.toNextType = function(nextType) {
 		if(nextType != null) {
 			$scope.curType = nextType;
 		} else {
 			if($scope.curType === 'type3') {
+				// 做完一个单词，完成总数+1
+				$scope.progress = parseInt(++pCurCount / pTotal * 100, 10);
 				$scope.toNextWord();
 			} else {
 				$scope.curType = 'type' + (parseInt($scope.curType.slice($scope.curType.length - 1), 10) + 1);
@@ -247,6 +253,14 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 	 */
 	$scope.closeAlert = function() {
 		$scope.isAlert = false;
+	};
+
+	/**
+	 * [playAudio 播放音频]
+	 */
+	$scope.playAudio = function() {
+		let audio = $('audio')[0];
+		audio != null && (audio.play());
 	};
 }]);
 
