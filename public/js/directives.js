@@ -36,14 +36,10 @@ typeDirectives.directive('stType2', function() {
 					// 移除点击事件
 					$('#picList').off('click.t2');
 
-					$li.css({
-						'background-color': 'red'
-					});
+					$li.addClass('right');
 
 					setTimeout(function() {
-						$li.css({
-							'background-color': '#666'
-						});
+						$li.removeClass('right');
 
 						// 进入下一题
 						scope.toNextType();
@@ -53,14 +49,10 @@ typeDirectives.directive('stType2', function() {
 					}, 500);
 				} else {
 					// 错误
-					$li.css({
-						'background-color': 'red'
-					});
+					$li.addClass('error');
 
 					setTimeout(function() {
-						$li.css({
-							'background-color': '#666'
-						});
+						$li.removeClass('error');
 					}, 500);
 				}
 			});

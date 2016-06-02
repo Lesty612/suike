@@ -81,10 +81,16 @@ typeServices.factory('Types', function() {
 	    	randNum = 0,
 	    	// 正确选项所在位置
 	    	randOption = Math.floor(Math.random() * 4) + 1,
+	    	// 当前图片路径
+	    	curPic = '',
+	    	// 随机的图片路径
+	    	randPic = '',
+	    	// 已经选中的选项集合
 			randList = new Object();
 
 	    // 保存正确选项
 	    newObj["picOption" + randOption] = newObj.p2;
+	    curPic = newObj.p2;
 
 	    while (i < 5) {
 	        // 如果i索引到了正确项所在位置，则跳过，并指向下一个选项位置
@@ -100,11 +106,15 @@ typeServices.factory('Types', function() {
 	            continue;
 	        }
 
-	        randList[randNum] = randNum;
-	        // 保存干扰图
-	        newObj["picOption" + i] = (data.length >= 5 ? data[randNum].p2 : fallbackPic[randNum]);
-
-	        i++;
+	        // 获取干扰图
+	        randPic = (data.length >= 5 ? data[randNum].p2 : fallbackPic[randNum]);
+	        // 判断所选干扰图和正确答案是否相同
+	        if(randPic !== curPic) {
+	        	randList[randNum] = randNum;
+	        	// 保存干扰图
+	        	newObj["picOption" + i] = randPic;
+	        	i++;
+	        }
 	    }
 	};
 
@@ -114,10 +124,15 @@ typeServices.factory('Types', function() {
 	    	randNum = 0,
 	    	// 正确选项所在位置
 	    	randOption = Math.floor(Math.random() * 4) + 1,
+	    	// 当前翻译
+	    	curMean = '',
+	    	// 随机的翻译
+	    	randMean = '',
 			randList = new Object();
 
 	    // 保存正确选项
 	    newObj["meanOption" + randOption] = newObj.wordMean;
+	    curMean = newObj.wordMean;
 
 	    while (i < 5) {
 	        // 如果i索引到了正确项所在位置，则跳过，并指向下一个选项位置
@@ -133,11 +148,15 @@ typeServices.factory('Types', function() {
 	            continue;
 	        }
 
-	        randList[randNum] = randNum;
-	        // 保存干扰项
-	        newObj["meanOption" + i] = (data.length >= 5 ? data[randNum].wordMean : fallbackMean[randNum]);
-
-	        i++;
+	        // 获取干扰项
+	        randMean = (data.length >= 5 ? data[randNum].wordMean : fallbackMean[randNum]);
+	        // 判断干扰项和正确答案是否相同
+	        if(randMean !== curMean) {
+	        	randList[randNum] = randNum;
+	        	// 保存干扰项
+	        	newObj["meanOption" + i] = randMean;
+	        	i++;
+	        }
 	    }
 	};
 

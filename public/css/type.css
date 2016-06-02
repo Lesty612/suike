@@ -8,7 +8,7 @@
 
 .do-type-back {
 	font-size: 30px;
-	margin: 10px 0 12%;
+	margin-top: 10px;
 }
 
 .do-type-back > a {
@@ -22,16 +22,25 @@
 	}
 
 	.do-type-back {
-		margin: 20px 0 5%;
+		margin-top: 20px;
 	}
+}
+
+.type {
+	color: #666;
 }
 
 /**
  * [type1页面]
  */
+.t1 {
+	margin-top: 10%;
+}
 
-.type {
-	color: #666;
+@media(min-width: 768px) {
+	.t1 {
+		margin-top: 3%;
+	}
 }
 
 .highlight-word {
@@ -98,32 +107,87 @@
 }
 
 /**
- * [type2页面]
+ * [type2页面, type3页面]
  */
-.pic-box {
-	width: 90%;
-	margin: 0 auto;
+.t2 {
+	margin-top: -20px;
 }
 
-.pic-box > ul {
+.pic-box, .mean-box {
+	width: 100%;
+}
+
+@media(min-width: 768px) {
+	.t2 {
+		margin-top: -30px;
+	}
+
+	.pic-box, .mean-box {
+		width: 90%;
+		margin: 0 auto;
+	}
+}
+
+.pic-box > ul, .mean-box > ul {
 	margin-bottom: 0;
 	padding-left: 0;
 	/*取消行内元素间隙*/
 	font-size: 0;
+	list-style: none;
 }
 
 .pic-item {
 	position: relative;
 	display: inline-block;
-	width: 49%;
+	width: 48%;
+	height: 150px;
+	margin-top: 10px;
 	padding: 10px 5px;
 
-	background-color: #f4efe5;
-	border-radius: 4px;
+	background-color: #CDCDCD;
+	border: 2px solid transparent;
+	border-radius: 8px;
+
+	cursor: pointer;
+}
+
+.pic-item:nth-child(2n-1) {
+	margin-right: 1%;
+}
+
+.pic-item:hover {
+	border-color: #0076DC;
+}
+
+.mean-item {
+	/*必须，因为ul里font-size为0*/
+	font-size: 16px;
+
+	cursor: pointer;
+}
+
+.mean-item > span {
+	display: inline-block;
+	width: 60%;
+	padding: 10px 0;
+
+	border: 1px solid #F2EEE1;
+}
+
+.mean-item > span:hover {
+	color: #000;
+	background-color: #CDCDCD;
+}
+
+@media(min-width: 768px) {
+	.pic-item {
+		height: 160px;
+	}
 }
 
 .pic-item > img {
 	width: 100%;
+	height: 100%;
 }
 
 .error {

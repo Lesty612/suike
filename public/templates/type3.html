@@ -1,1 +1,15 @@
-{{curWord.word}}
+<div class="type t3">
+	<h2>{{curWord.word}}</h2>
+	<div>
+		<a aria-label="播放音频" ng-click="playAudio()" class="t1-audio"><span class="glyphicon glyphicon-headphones" aria-hidden="true"></span></a>
+		<audio autoplay ng-src="{{curWord.wordAudio}}"></audio>
+	</div>
+	<div class="mean-box">
+		<ul id="meanList">
+			<li class="mean-item"><span>{{curWord.meanOption1}}</span></li>
+			<li class="mean-item"><span>{{curWord.meanOption2}}</span></li>
+			<li class="mean-item"><span>{{curWord.meanOption3}}</span></li>
+			<li class="mean-item"><span>{{curWord.meanOption4}}</span></li>
+		</ul>
+	</div>
+</div>
