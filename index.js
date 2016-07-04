@@ -5,6 +5,9 @@ var express = require('express'),
     selectRoutes = require('./routes/select'),
     typeRoutes = require('./routes/type'),
     favicon = require('serve-favicon'),
+    settings = require('./settings'),
+    session = require('express-session'),
+    MongoStore = require('connect-mongo')(session),
     path = require('path');
 
 /**
@@ -26,6 +29,16 @@ app.engine('html', require('ejs').renderFile);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// 将会话信息存储到mongodb中
+app.use(session({
+    secret: settings.cookieSecret, // 防止篡改cookie
+    key: settings.cookieKey,
+    cookie: {maxAge: 1000 * 60 * 60 * 24 * 10},
+    store: new MongoStore({
+        url: settings.dbUrl
+    })
+}));
 
 // 设置相应路由
 app.use('/', userRoutes);
