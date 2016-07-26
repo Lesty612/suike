@@ -35,6 +35,8 @@ app.use(session({
     secret: settings.cookieSecret, // 防止篡改cookie
     key: settings.cookieKey,
     cookie: {maxAge: 1000 * 60 * 60 * 24 * 10},
+    resave: false,
+    saveUninitialized: true,
     store: new MongoStore({
         url: settings.dbUrl
     })

@@ -5,25 +5,29 @@
             <li><a href="#/register" class="nav-active">注册</a></li>
         </ul>
     </nav>
-    <form class="login-form" action="register" method="post">
+    <form class="login-form" ng-submit="submit($event)">
         <div class="login-box">
             <label class="login-label" for="userName">Name：</label>
-            <input class="login-input" id="userName" name="userName" type="text" placeholder="请输入您的姓名" minlength="5" required>
+            <input class="login-input" id="userName" name="userName" ng-model="regUser.userName" type="text" placeholder="请输入您的姓名" minlength="5" required>
         </div>
         <div class="login-box">
             <label class="login-label" for="email">Email：</label>
-            <input class="login-input" id="email" name="email" type="email" placeholder="请输入您的邮箱" required>
+            <input class="login-input" id="email" name="email" ng-model="regUser.email" type="email" placeholder="请输入您的邮箱" required>
         </div>
         <div class="login-box">
             <label class="login-label" for="password">Password：</label>
-            <input class="login-input" id="password" name="password" type="password" placeholder="请输入您的密码" required minlength="6">
+            <input class="login-input" id="password" name="password" ng-model="regUser.password" type="password" placeholder="请输入您的密码" required minlength="6">
         </div>
         <div class="login-box">
             <label class="login-label" for="passwordAg">Repeat：</label>
-            <input class="login-input" id="passwordAg" name="passwordAg" type="password" placeholder="请确认您的密码" required minlength="6">
+            <input class="login-input" id="passwordAg" name="passwordAg" ng-model="regUser.passwordAg" type="password" placeholder="请确认您的密码" required minlength="6">
+        </div>
+        <div class="login-box" ng-hide="errorMsg === ''">
+            <label class="login-label">错误：</label>
+            <span style="color: #f12812">{{errorMsg}}</span>
         </div>
         <div class="login-box">
-            <button type="submit" class="btn btn-lg btn-primary login-btn">注册(Sign up)</button>
+            <button type="submit" ng-disabled="sendState === 'sending'" class="btn btn-lg btn-primary login-btn">注册(Sign up)</button>
         </div>
     </form>
 </section>

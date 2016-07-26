@@ -16,11 +16,44 @@ mainControllers.controller('welcomeCtrl', ['$scope', function($scope) {
 }]);
 
 mainControllers.controller('loginCtrl', ['$scope', function($scope) {
-	//
+	
 }]);
 
-mainControllers.controller('registerCtrl', ['$scope', function($scope) {
-	//
+mainControllers.controller('registerCtrl', ['$scope', '$http', function($scope, $http) {
+	// 注册用户的信息
+	$scope.regUser = {};
+	// 错误提示
+	$scope.errorMsg = '';
+	// 表单发送状态，用于控制提交按钮disabled属性
+	$scope.sendState = 'over';
+
+	// 提交表单
+	$scope.submit = function(event) {
+		// 修改发送状态
+		$scope.sendState = 'sending';
+
+		// 阻止表单默认事件
+	    event.preventDefault();
+		// 停止当前元素后续事件并阻止冒泡
+		event.stopImmediatePropagation();
+
+		$http.post('register', $scope.regUser).then(function(res) {
+			// 获取返回数据
+			let data = res.data;
+			// 修改发送状态
+			$scope.sendState = 'over';
+
+			// 存在url就跳转
+			if(data.url) {
+				window.location.href = window.location.origin + data.url;
+			} else {
+				// 显示错误信息
+				$scope.errorMsg = res.data.msg || '';
+			}
+		}, function(err) {
+		    // error
+		});
+	}
 }]);
 
 /**
@@ -78,7 +111,7 @@ selectControllers.controller('wordListCtrl', ['$scope', '$rootScope', '$http', '
 		$scope.wordList = res.data;
 		// 遍历分数,如果有分数就为false(现在还没弄)
 		
-		// 如果做题次数，则代表学过，
+		// 如果有做题次数，则代表学过，
 		for(let i = $scope.wordList.length; i--;) {
 			tmpWord = $scope.wordList[i];
 
