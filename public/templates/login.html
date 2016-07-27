@@ -5,24 +5,31 @@
             <li><a href="#/register">注册</a></li>
         </ul>
     </nav>
-    <form class="login-form" action="login" method="post">
+    <form class="login-form" ng-submit="login($event)">
         <div class="login-box">
             <label class="login-label" for="email">Email：</label>
-            <input class="login-input" id="email" name="email" type="email" placeholder="请输入您的邮箱" required>
+            <input class="login-input" id="email" name="email" type="email" ng-model="loginUser.email" placeholder="请输入您的邮箱" required>
         </div>
         <div class="login-box">
             <label class="login-label" for="password">Password：</label>
-            <input class="login-input" id="password" name="password" type="password" placeholder="请输入您的密码" required ng-minlength="6">
+            <input class="login-input" id="password" name="password" type="password" ng-model="loginUser.password" placeholder="请输入您的密码" required ng-minlength="6">
         </div>
-        <div class="login-box">
+        <div class="login-box" style="margin-bottom: 0">
+            <label class="login-label"> </label>
             <div class="checkbox">
                 <label>
                     <input type="checkbox"> Remember me
                 </label>
             </div>
         </div>
+        <div class="login-box" ng-hide="errorMsg === ''">
+            <label class="login-label"> </label>
+            <div class="errorBox">
+                <span>{{errorMsg}}</span>
+            </div>
+        </div>
         <div class="login-box">
-            <button type="submit" class="btn btn-lg btn-primary login-btn">登 录(Sign in)</button>
+            <button type="submit" ng-disabled="sendState === 'sending'" class="btn btn-lg btn-primary login-btn">登 录(Sign in)</button>
         </div>
     </form>
 </section>

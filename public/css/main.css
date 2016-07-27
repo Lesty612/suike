@@ -177,9 +177,16 @@ html, body {
 	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
-.checkbox {
-	margin-left: 23%;
-	text-align: left;
+.checkbox,
+.errorBox {
+    display: inline-block;
+    width: 75%;
+    padding-left: 2px;
+    text-align: left;
+}
+
+.errorBox > span {
+	color: #f12812;
 }
 
 .login-nav {

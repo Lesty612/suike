@@ -15,8 +15,41 @@ mainControllers.controller('welcomeCtrl', ['$scope', function($scope) {
 	//
 }]);
 
-mainControllers.controller('loginCtrl', ['$scope', function($scope) {
-	
+mainControllers.controller('loginCtrl', ['$scope', '$http', function($scope, $http) {
+	// 登录用户的信息
+	$scope.loginUser = {};
+	// 错误提示
+	$scope.errorMsg = '';
+	// 表单发送状态，用于控制提交按钮disabled属性
+	$scope.sendState = 'over';
+
+	// 提交表单
+	$scope.login = function(event) {
+		// 修改发送状态
+		$scope.sendState = 'sending';
+
+		// 阻止表单默认事件
+	    event.preventDefault();
+		// 停止当前元素后续事件并阻止冒泡
+		event.stopImmediatePropagation();
+
+		$http.post('login', $scope.loginUser).then(function(res) {
+			// 获取返回数据
+			let data = res.data;
+			// 修改发送状态
+			$scope.sendState = 'over';
+
+			// 存在url就跳转
+			if(data.url) {
+				window.location.href = window.location.origin + data.url;
+			} else {
+				// 显示错误信息
+				$scope.errorMsg = res.data.msg || '';
+			}
+		}, function(err) {
+		    // error
+		});
+	}
 }]);
 
 mainControllers.controller('registerCtrl', ['$scope', '$http', function($scope, $http) {
@@ -28,7 +61,7 @@ mainControllers.controller('registerCtrl', ['$scope', '$http', function($scope, 
 	$scope.sendState = 'over';
 
 	// 提交表单
-	$scope.submit = function(event) {
+	$scope.regist = function(event) {
 		// 修改发送状态
 		$scope.sendState = 'sending';
 

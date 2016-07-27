@@ -12,13 +12,36 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/login', function(req, res) {
-	if(req.body.email === "lesty612@163.com" && req.body.password === "123456") {
-		res.redirect('/select');
-	} else {
-		return res.status(200).json({
-			error: "用户名或密码错误！"
+	// MD5加密密码
+	var md5 = crypto.createHash('md5');
+
+	var email = req.body.email,
+		password = req.body.password;
+
+	password = md5.update(password).digest('hex');
+
+	User.get(email, function(err, user) {
+		if(!user) {
+			return res.status(200).json({
+				msg: '用户不存在！'
+			});
+		}
+
+		if(password !== user.password) {
+			return res.status(200).json({
+				msg: '密码错误！'
+			});
+		}
+
+		// 用户信息存入session 
+		req.session.user = user;
+
+		// 进入学习页
+		res.status(200).json({
+			msg: '',
+			url: '/select'
 		});
-	}
+	});
 });
 
 router.post('/register', function(req, res) {
@@ -33,8 +56,9 @@ router.post('/register', function(req, res) {
 		});
 	} else {
 		// MD5加密密码
-		var md5 = crypto.createHash('md5'),
-			password = md5.update(password).digest('hex');
+		var md5 = crypto.createHash('md5');
+
+		password = md5.update(password).digest('hex');
 
 		// 新用户
 		var newUser = new User({

@@ -42,7 +42,7 @@ User.prototype.save = function(callback) {
 };
 
 // 读取用户信息
-User.get = function(userName, callback) {
+User.get = function(email, callback) {
 	// 打开数据库
 	mongodb.open(function(err, db) {
 		if(err) {
@@ -56,9 +56,9 @@ User.get = function(userName, callback) {
 				return callback(err);
 			}
 
-			// 查找用户名为userName的一个文档
+			// 查找用户名为email的一个文档
 			collection.findOne({
-				userName: userName
+				email: email
 			}, function(err, result) {
 				mongodb.close();
 

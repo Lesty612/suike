@@ -5,7 +5,7 @@
             <li><a href="#/register" class="nav-active">注册</a></li>
         </ul>
     </nav>
-    <form class="login-form" ng-submit="submit($event)">
+    <form class="login-form" ng-submit="regist($event)">
         <div class="login-box">
             <label class="login-label" for="userName">Name：</label>
             <input class="login-input" id="userName" name="userName" ng-model="regUser.userName" type="text" placeholder="请输入您的姓名" minlength="5" required>
@@ -23,8 +23,10 @@
             <input class="login-input" id="passwordAg" name="passwordAg" ng-model="regUser.passwordAg" type="password" placeholder="请确认您的密码" required minlength="6">
         </div>
         <div class="login-box" ng-hide="errorMsg === ''">
-            <label class="login-label">错误：</label>
-            <span style="color: #f12812">{{errorMsg}}</span>
+            <label class="login-label"> </label>
+            <div class="errorBox">
+                <span>{{errorMsg}}</span>
+            </div>
         </div>
         <div class="login-box">
             <button type="submit" ng-disabled="sendState === 'sending'" class="btn btn-lg btn-primary login-btn">注册(Sign up)</button>
