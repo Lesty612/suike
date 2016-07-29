@@ -8,11 +8,14 @@ var express = require('express'),
  * [主页面路由]
  * @codeDate 2016.5.10
  */
+// 检测用户是否已登录过
+// 已登录则直接跳转到选择页面
 router.get('/', tools.checkLogin);
 router.get('/', function(req, res, next) {
 	res.render('user');
 });
 
+// 登录
 router.post('/login', function(req, res) {
 	// MD5加密密码
 	var md5 = crypto.createHash('md5');
@@ -46,6 +49,7 @@ router.post('/login', function(req, res) {
 	});
 });
 
+// 注册
 router.post('/register', function(req, res) {
 	var userName = req.body.userName,
 		password = req.body.password,
@@ -103,6 +107,7 @@ router.post('/register', function(req, res) {
 	}
 });
 
+// 注销
 router.get('/logout', function(req, res) {
 	// 消除用户session记录
 	req.session.user = null;
