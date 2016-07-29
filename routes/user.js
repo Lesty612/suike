@@ -1,12 +1,14 @@
 var express = require('express'),
 	router = express.Router(),
 	crypto = require('crypto'),
-	User = require('../models/user');
+	User = require('../models/user'),
+	tools = require('./tools');
 
 /**
  * [主页面路由]
  * @codeDate 2016.5.10
  */
+router.get('/', tools.checkLogin);
 router.get('/', function(req, res, next) {
 	res.render('user');
 });
@@ -102,6 +104,9 @@ router.post('/register', function(req, res) {
 });
 
 router.get('/logout', function(req, res) {
+	// 消除用户session记录
+	req.session.user = null;
+
 	res.redirect('/#/login');
 });
 

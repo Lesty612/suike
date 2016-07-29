@@ -1,11 +1,13 @@
 var express = require('express'),
-	router = express.Router();
+	router = express.Router(),
+	tools = require('./tools');
 
 /**
  * [学习单元选择模块的路由]
  * @author Lesty
  * @codeDate 2016.5.13
  */
+router.get('/', tools.checkNotLogin);
 router.get('/', function(req, res) {
 	res.render('select');
 });
