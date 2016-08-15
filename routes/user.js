@@ -2,6 +2,7 @@ var express = require('express'),
 	router = express.Router(),
 	crypto = require('crypto'),
 	User = require('../models/user'),
+	ObjectID = require('mongodb').ObjectID,
 	tools = require('./tools');
 
 /**
@@ -10,6 +11,7 @@ var express = require('express'),
  */
 // 检测用户是否已登录过
 // 已登录则直接跳转到选择页面
+// 否则渲染主页
 router.get('/', tools.checkLogin);
 router.get('/', function(req, res, next) {
 	res.render('user');
@@ -41,11 +43,20 @@ router.post('/login', function(req, res) {
 		// 用户信息存入session 
 		req.session.user = user;
 
-		// 进入学习页
-		res.status(200).json({
-			msg: '',
-			url: '/select'
-		});
+		if(user.curBookId) {
+			// 进入单元页
+			res.status(200).json({
+				msg: '',
+				url: '/select'
+			});
+		} else {
+			// 进入教材页
+			res.status(200).json({
+				msg: '',
+				url: '/select#/books'
+			});
+		}
+
 	});
 });
 
@@ -70,20 +81,30 @@ router.post('/register', function(req, res) {
 		var newUser = new User({
 			userName: userName,
 			password: password,
-			email: req.body.email
+			email: req.body.email,
+			curBookId: null,
+			curUnitId: null
 		});
 
-		// 检查用户名是否已存在
-		User.get(newUser.userName, function(err, user) {
+		// 检查邮箱是否已被使用
+		User.get(newUser.email, function(err, user) {
 			if(err) {
 				return res.status(200).json({
 					msg: err
 				});
 			}
-			// 用户已存在
-			if(user) {
+
+			// 用户名已存在
+			if(user && user.userName === newUser.userName) {
 				return res.status(200).json({
-					msg: '用户已存在！'
+					msg: '用户名已存在！'
+				});
+			}
+
+			// 邮箱已被使用
+			if(user && user.email === newUser.email) {
+				return res.status(200).json({
+					msg: '邮箱已被使用！'
 				});
 			}
 
@@ -94,13 +115,14 @@ router.post('/register', function(req, res) {
 					});
 				}
 
-				// 用户信息存入session 
+				// 用户信息存入session
+				
 				req.session.user = newUser;
 
 				// 进入学习页
 				res.status(200).json({
 					msg: '',
-					url: '/select'
+					url: '/select#/books'
 				});
 			});
 		});

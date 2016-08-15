@@ -7,19 +7,26 @@ var express = require('express'),
  * @author Lesty
  * @codeDate 2016.5.13
  */
+// 检测用户是否已登录过
+// 如果没有登录则直接跳转到登录页面
+// 否则渲染选择页面
 router.get('/', tools.checkNotLogin);
 router.get('/', function(req, res) {
 	res.render('select');
 });
 
+// 获取用户选择信息(教材、单元)
 router.get('/user_select_info', function(req, res) {
+	var user = req.session.user;
+
 	res.status(200).json({
-		userName: 'Lesty',
-		curBookId: 2,
-		curUnitId: 1
+		userName: user.userName,
+		curBookId: user.curBookId,
+		curUnitId: user.curUnitId
 	});
 });
 
+// 获取教材信息
 router.get('/books_info', function(req, res) {
 	res.status(200).json([
 		{

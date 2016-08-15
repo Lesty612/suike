@@ -4,6 +4,10 @@ function User(user) {
 	this.userName = user.userName;
 	this.password = user.password;
 	this.email = user.email;
+	// 当前选择的教材
+	this.curBookId = user.curBookId;
+	// 当前选择的单元(对应教材)
+	this.curUnitId = user.curUnitId;
 };
 
 // 存储用户信息
@@ -11,7 +15,9 @@ User.prototype.save = function(callback) {
 	var user = {
 		userName: this.userName,
 		password: this.password,
-		email: this.email
+		email: this.email,
+		curBookId: this.curBookId,
+		curUnitId: this.curUnitId
 	};
 
 	// 打开数据库
@@ -56,7 +62,7 @@ User.get = function(email, callback) {
 				return callback(err);
 			}
 
-			// 查找用户名为email的一个文档
+			// 根据email查找一个文档
 			collection.findOne({
 				email: email
 			}, function(err, result) {

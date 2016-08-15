@@ -26,7 +26,11 @@ function checkNotLogin(req, res, next) {
  */
 function checkLogin(req, res, next) {
 	if(req.session.user) {
-		return res.redirect('/select');
+		if(req.session.user.curBookId) {
+			return res.redirect('/select');
+		} else {
+			return res.redirect('/select#/books');
+		}
 	}
 
 	// 转移控制权
