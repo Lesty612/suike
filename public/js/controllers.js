@@ -109,7 +109,7 @@ selectControllers.controller('unitsCtrl', ['$scope', '$rootScope', '$http', '$ro
 	$scope.curBookId = selectInfo.getCurBookId();
 
 	$http.post('/select/choose_book', {bookId: $scope.curBookId}).then(function(res) {
-		$scope.units = res.data.units;
+		$scope.units = res.data;
 		angular.forEach($scope.units, function(item, index, arr) {
 			arr[index].progress = parseInt(item.hasLearned / item.total * 100, 10);
 		});

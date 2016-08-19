@@ -2,7 +2,6 @@ var express = require('express'),
 	router = express.Router(),
 	crypto = require('crypto'),
 	User = require('../models/user'),
-	ObjectID = require('mongodb').ObjectID,
 	tools = require('./tools');
 
 /**

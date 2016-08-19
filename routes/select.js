@@ -1,5 +1,7 @@
 var express = require('express'),
 	router = express.Router(),
+	Book = require('../models/book'),
+	Unit = require('../models/unit'),
 	tools = require('./tools');
 
 /**
@@ -28,54 +30,22 @@ router.get('/user_select_info', function(req, res) {
 
 // 获取教材信息
 router.get('/books_info', function(req, res) {
-	res.status(200).json([
-		{
-			id: 0,
-			name: '人教版第一册',
-			bookId: 1,
-			progress: '29'
-		},
-		{
-			id: 1,
-			name: '人教版第二册',
-			bookId: 2,
-			progress: '12'
-		},
-		{
-			id: 2,
-			name: '人教版第三册',
-			bookId: 3,
-			progress: '24'
-		},
-		{
-			id: 3,
-			name: '人教版第四册',
-			bookId: 4,
-			progress: '26'
+	Book.getAllByEditionId("57b167ea4407383982740297", function(err, books) {
+		if(err) {
+			res.status(200).json(err);
 		}
-	]);
+		
+		res.status(200).json(books);
+	});
 });
 
 router.post('/choose_book', function(req, res) {
-	res.status(200).json({
-		status: true,
-		units: [
-			{
-				uid: 1,
-				hasLearned: 5,
-				total: 30
-			},
-			{
-				uid: 2,
-				hasLearned: 4,
-				total: 32
-			},
-			{
-				uid: 3,
-				hasLearned: 17,
-				total: 35
-			}
-		]
+	Unit.getAllByBookId(req.body.bookId, function(err, units) {
+		if(err) {
+			res.status(200).json(err);
+		}
+
+		res.status(200).json(units);
 	});
 });
 

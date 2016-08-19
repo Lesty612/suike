@@ -65,14 +65,15 @@ User.get = function(email, callback) {
 			// 根据email查找一个文档
 			collection.findOne({
 				email: email
-			}, function(err, result) {
+			}, function(err, user) {
 				mongodb.close();
 
 				if(err) {
 					return callback(err);
 				}
 
-				callback(null, result);
+				user._id = user._id.toHexString();
+				callback(null, user);
 			});
 		});
 	});
