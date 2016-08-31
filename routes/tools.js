@@ -26,9 +26,13 @@ function checkNotLogin(req, res, next) {
  */
 function checkLogin(req, res, next) {
 	if(req.session.user) {
+		// 用户未选过书则跳到选书页
+		// 否则跳到选单元页
 		if(req.session.user.curBookId) {
+			console.log('redirect /select');
 			return res.redirect('/select');
 		} else {
+			console.log('redirect /select#/books');
 			return res.redirect('/select#/books');
 		}
 	}

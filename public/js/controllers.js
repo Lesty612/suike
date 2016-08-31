@@ -35,7 +35,7 @@ mainControllers.controller('loginCtrl', ['$scope', '$http', function($scope, $ht
 
 		$http.post('login', $scope.loginUser).then(function(res) {
 			// 获取返回数据
-			let data = res.data;
+			var data = res.data;
 			// 修改发送状态
 			$scope.sendState = 'over';
 
@@ -72,7 +72,7 @@ mainControllers.controller('registerCtrl', ['$scope', '$http', function($scope, 
 
 		$http.post('register', $scope.regUser).then(function(res) {
 			// 获取返回数据
-			let data = res.data;
+			var data = res.data;
 			// 修改发送状态
 			$scope.sendState = 'over';
 
@@ -92,31 +92,44 @@ mainControllers.controller('registerCtrl', ['$scope', '$http', function($scope, 
 /**
  * [selectControllers控制器]
  */
-selectControllers.controller('booksCtrl', ['$scope', '$rootScope', '$http', 'selectInfo', function($scope, $rootScope, $http, selectInfo) {
-	$rootScope.moduleTitle = '教材选择';
-
+selectControllers.controller('booksCtrl', ['$scope', '$rootScope', '$http', '$location', 'selectInfo', function($scope, $rootScope, $http, $location, selectInfo) {
+	// 获取所有教材信息
 	$http.get('/select/books_info').then(function(res) {
-		$scope.books = res.data;
+		var data = res.data;
+		$rootScope.moduleTitle = data.editionName + '-教材选择';
+		$scope.books = data.books;
 	});
 
 	$scope.chooseBook = function(bookId) {
+		console.log(bookId);
+		// 选择书本
+		$http.post('/select/choose_book', {bookId: bookId}).then(function(res) {
+			$location.path('/units');
+		});
+		// 设置当前bookId
 		selectInfo.setCurBookId(bookId);
 	};
 }]);
 
-selectControllers.controller('unitsCtrl', ['$scope', '$rootScope', '$http', '$routeParams', 'selectInfo', function($scope, $rootScope, $http, $routeParams, selectInfo) {
-	$rootScope.moduleTitle = '单元选择';
-	$scope.curBookId = selectInfo.getCurBookId();
-
-	$http.post('/select/choose_book', {bookId: $scope.curBookId}).then(function(res) {
-		$scope.units = res.data;
+selectControllers.controller('unitsCtrl', ['$scope', '$rootScope', '$http', '$location', '$routeParams', 'selectInfo', function($scope, $rootScope, $http, $location, $routeParams, selectInfo) {
+	// 获取所有单元信息
+	$http.get('/select/units_info').then(function(res) {
+		var data = res.data;
+		$rootScope.moduleTitle = data.bookName + '-单元选择';
+		$scope.units = data.units;
+		
 		angular.forEach($scope.units, function(item, index, arr) {
 			arr[index].progress = parseInt(item.hasLearned / item.total * 100, 10);
 		});
 	});
 
-	$scope.chooseUnit = function(uid) {
-		selectInfo.setCurUnitId(uid);
+	$scope.chooseUnit = function(unitId) {
+		// 选择单元
+		$http.post('/select/choose_unit', {unitId: unitId}).then(function(res) {
+			$location.path('/word-list');
+		});
+
+		selectInfo.setCurUnitId(unitId);
 	};
 }]);
 
@@ -126,7 +139,6 @@ selectControllers.controller('partsCtrl', ['$scope', '$rootScope', function($sco
 
 selectControllers.controller('wordListCtrl', ['$scope', '$rootScope', '$http', '$routeParams', 'selectInfo', function($scope, $rootScope, $http, $routeParams, selectInfo) {
 	$rootScope.moduleTitle = '单词列表';
-	$scope.uid = selectInfo.getCurUnitId();
 	// 用户是否已经学过该部分
 	$scope.hasLearned = false;
 	// 根据isAlert判断警告框是否弹出
@@ -134,18 +146,15 @@ selectControllers.controller('wordListCtrl', ['$scope', '$rootScope', '$http', '
 	// 提示语句
 	$scope.alertSentence = '';
 
-	// 带上日期参数，避免缓存
-	$http.get('/select/choose_part', {params: {
-		uid: $scope.uid,
-		date: +new Date()
-	}}).then(function(res) {
-		let tmpWord = null;
+	// 获取单词列表
+	$http.get('/select/words_list').then(function(res) {
+		var tmpWord = null;
 
 		$scope.wordList = res.data;
 		// 遍历分数,如果有分数就为false(现在还没弄)
 		
-		// 如果有做题次数，则代表学过，
-		for(let i = $scope.wordList.length; i--;) {
+		// 如果有做题次数，则代表学过
+		for(var i = $scope.wordList.length; i--;) {
 			tmpWord = $scope.wordList[i];
 
 			if(tmpWord.dt !== 0) {
@@ -160,21 +169,21 @@ selectControllers.controller('wordListCtrl', ['$scope', '$rootScope', '$http', '
 
 	/**
 	 * [changeWordState 改变wordList里单词的学习状态]
-	 * @param  {String} word [要改变状态的单词]
+	 * @param  {String} wordId [要改变状态的单词Id]
 	 */
-	$scope.changeWordState = function(word) {
+	$scope.changeWordState = function(wordId) {
 		// 临时对象
-		let tmpWord = null;
+		var tmpWord = null;
 
-		for(let i = $scope.wordList.length; i--;) {
+		for(var i = $scope.wordList.length; i--;) {
 			tmpWord = $scope.wordList[i];
-			if(tmpWord.word === word) {
+			if(tmpWord._id === wordId) {
 				// 修改学习状态
 				$scope.wordList[i].learnState = !tmpWord.learnState;
 
 				// 发送修改请求
 				$http.post('/select/change_learn_state', {
-					id: tmpWord.id,
+					id: wordId,
 					learnState: $scope.wordList[i].learnState
 				}).then(function(res) {
 					// do some thing with res.data
@@ -208,7 +217,7 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 	$rootScope.moduleTitle = '单元学习';
 	$scope.isAlert = false;
 
-	let curIndex = -1, // 当前单词位置索引
+	var curIndex = -1, // 当前单词位置索引
 		data = 0, // 所有单词详细信息[数组]
 		dataLen = 0, // 需要学习的单词数量
 		pTotal = 0, // 全部单词的数据数量
@@ -270,7 +279,7 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 	 */
 	$scope.toNextWord = function() {
 		// 下一个题型
-		let nextType = '';
+		var nextType = '';
 
 		// 跳到下一单词时，将当前单词学习情况发送到后台
 		if(curIndex >= 0) {
@@ -325,7 +334,7 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 	 * [playAudio 播放音频]
 	 */
 	$scope.playAudio = function() {
-		let audio = $('audio')[0];
+		var audio = $('audio')[0];
 		audio != null && (audio.play());
 	};
 }]);

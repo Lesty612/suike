@@ -95,7 +95,7 @@ typeApp.run(['$rootScope', '$http', 'selectInfo', function($rootScope, $http, se
 	$http.get('/select/user_select_info', {params: {
 		date: +new Date()
 	}}).then(function(res) {
-		let data = res.data;
+		var data = res.data;
 		$rootScope.userName = data.userName;
 		selectInfo.setCurBookId(data.curBookId);
 		selectInfo.setCurUnitId(data.curUnitId);

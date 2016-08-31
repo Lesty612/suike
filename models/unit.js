@@ -29,7 +29,7 @@ Unit.get = function(unitId, callback) {
 					return callback(err);
 				}
 
-				unit._id = unitId._id.toHexString();
+				unit && (unit._id = unitId._id.toHexString());
 				callback(null, unit);
 			});
 		});
@@ -54,7 +54,7 @@ Unit.getAllByBookId = function(bookId, callback) {
 
 			// 获取units集合里所有文档
 			col.find({bookId: bookId}).toArray(function(err, units) {
-				mongodb.close();
+				db.close();
 				if(err) {
 					return callback(err);
 				}

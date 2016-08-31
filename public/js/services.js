@@ -8,7 +8,7 @@ var globalInfoServices = angular.module('globalInfoServices', []);
 var typeServices = angular.module('typeServices', []);
 
 globalInfoServices.factory('selectInfo', function() {
-	let curBookId = 0, // 当前所选的教材ID
+	var curBookId = 0, // 当前所选的教材ID
 		curUnitId = 0, // 当前所选单元ID
 		curPart = 0; // 当前所选部分
 
@@ -51,7 +51,7 @@ globalInfoServices.factory('selectInfo', function() {
 
 typeServices.factory('Types', function() {
 	// 预备的干扰图
-	let fallbackPic = [
+	var fallbackPic = [
 	    'http://pic1.hebei.com.cn/0/12/05/25/12052571_010153.jpg',
 	    'http://img5.imgtn.bdimg.com/it/u=1442159604,838517873&fm=21&gp=0.jpg',
 	    'http://d03.res.meilishuo.net/pic/_o/59/db/ece7c364542204213522e5b503dd_600_600.c1.jpg',
@@ -61,7 +61,7 @@ typeServices.factory('Types', function() {
 	];
 
 	// 预备的干扰词
-	let fallbackMean = [
+	var fallbackMean = [
 		'n. 插座',
 		'v. 奔跑;跑',
 		'adj. 崩溃的',
@@ -76,7 +76,7 @@ typeServices.factory('Types', function() {
 	 * @param  {Array} newObj [要添加干扰图的对象]
 	 */
 	function createRandomPic (data, newObj) {
-	    let i = 1,
+	    var i = 1,
 	    	// 干扰选项所在位置
 	    	randNum = 0,
 	    	// 正确选项所在位置
@@ -119,7 +119,7 @@ typeServices.factory('Types', function() {
 	};
 
 	function createRandomMean (data, newObj) {
-	    let i = 1,
+	    var i = 1,
 	    	// 干扰选项所在位置
 	    	randNum = 0,
 	    	// 正确选项所在位置

@@ -68,5 +68,7 @@ if (app.get('env') === 'development') {
 
 // 开始监听
 app.listen(8777, function() {
+    console.log('Suike is running...');
+    console.log('Designed by: ' + (35962486).toString(36).replace('\u006C', function(){return arguments[0].toUpperCase()}));
     console.log('Listening in port 8777');
 });

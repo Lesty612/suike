@@ -60,12 +60,12 @@ Book.get = function(bookId, callback) {
 			col.findOne({
 				_id: bookId
 			}, function(err, book) {
-				mongodb.close();
+				db.close();
 				if(err) {
 					return callback(err);
 				}
 
-				book._id = book._id.toHexString();
+				book && (book._id = book._id.toHexString());
 				callback(null, book);
 			});
 		});

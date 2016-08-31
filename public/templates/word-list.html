@@ -11,7 +11,7 @@
 		<ul class="word-list">
 			<li ng-repeat="word in wordList" ng-class="{'word-on': word.learnState}">
 				{{word.word}}
-				<div ng-show="!hasLearned" class="word-choose-state" ng-click="changeWordState(word.word)">
+				<div ng-show="!hasLearned" class="word-choose-state" ng-click="changeWordState(word._id)">
 					<em></em>
 				</div>
 			</li>

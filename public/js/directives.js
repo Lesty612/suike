@@ -5,7 +5,7 @@ typeDirectives.directive('stType1', function() {
 		restrict: 'EA',
 		templateUrl: './templates/type1.html',
 		link: function(scope, element, attrs) {
-			let curWord = scope.curWord,
+			var curWord = scope.curWord,
 				// 正则里需要查找的单词，由于担心单词可能会用ing和ed等变换形式
 				// 将长度较长的单词截断后2位字母匹配，如果单词长度太短则不截取，以免匹配多个单词
 				regWord = curWord.word.length > 5 ? curWord.word.slice(0, curWord.word.length - 2) : curWord.word,
@@ -23,7 +23,7 @@ typeDirectives.directive('stType2', function() {
 		templateUrl: './templates/type2.html',
 		link: function(scope, element, attrs) {
 			$('#picList').on('click.t2', 'li', function() {
-				let $li = $(this),
+				var $li = $(this),
 					picSrc = $li.children('img')[0].src;
 				
 				// 本地调试时，修改图片路径
