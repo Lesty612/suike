@@ -157,7 +157,7 @@ selectControllers.controller('wordListCtrl', ['$scope', '$rootScope', '$http', '
 		for(var i = $scope.wordList.length; i--;) {
 			tmpWord = $scope.wordList[i];
 
-			if(tmpWord.dt !== 0) {
+			if(tmpWord.dt && tmpWord.dt !== 0) {
 				$scope.hasLearned = true;
 				// 弹出提示
 				$scope.isAlert = true;
@@ -177,7 +177,7 @@ selectControllers.controller('wordListCtrl', ['$scope', '$rootScope', '$http', '
 
 		for(var i = $scope.wordList.length; i--;) {
 			tmpWord = $scope.wordList[i];
-			if(tmpWord._id === wordId) {
+			if(tmpWord.wordId === wordId) {
 				// 修改学习状态
 				$scope.wordList[i].learnState = !tmpWord.learnState;
 

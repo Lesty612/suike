@@ -4,6 +4,7 @@ var express = require('express'),
 	Book = require('../models/book'),
 	Unit = require('../models/unit'),
 	Word = require('../models/word'),
+	UserWord = require('../models/user_word'),
 	ObjectID = require('mongodb').ObjectID,
 	tools = require('./tools');
 
@@ -169,7 +170,7 @@ router.get('/words_list', function(req, res) {
 	var USER = req.session.user;
 
 	// 根据单元id获取单词列表
-	Word.getAllSimpleByUnitId(USER.curUnitId, function(err, wordsList) {
+	UserWord.getAll(USER._id, USER.curUnitId, function(err, wordsList) {
 		if(err) {
 			res.status(200).json(err);
 		}
@@ -180,9 +181,10 @@ router.get('/words_list', function(req, res) {
 
 // 更改单词学习状态
 router.post('/change_learn_state', function(req, res) {
+	var USER = req.session.user;
 	var reqData = req.body;
 
-	Word.update(reqData.id, {learnState: reqData.learnState}, function(err) {
+	UserWord.update(USER._id, reqData.id, {learnState: reqData.learnState}, function(err) {
 		if(err) {
 			res.status(200).json(err);
 		}
