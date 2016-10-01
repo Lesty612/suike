@@ -1,4 +1,5 @@
 var mongodb = require('./db'),
+	tools = require('../routes/tools'),
 	ObjectID = require('mongodb').ObjectID;
 
 function Word(word) {
@@ -10,9 +11,6 @@ function Word(word) {
 	this.sentenceMean = word.sentenceMean;
 	this.p1 = word.p1;
 	this.p2 = word.p2;
-	this.score = word.score;
-	this.learnState = word.learnState;
-	this.dt = word.dt;
 }
 
 /**
@@ -33,10 +31,12 @@ Word.getSimple = function(wordId, callback) {
 };
 
 /**
- * [getAllByUnitId 通过unitId获取所有单词详细信息]
+ * [getAll 通过unitId和userId获取所有单词详细信息]
  */
-Word.getAllByUnitId = function(unitId, callback) {
+Word.getAll = function(userId, unitId, callback) {
+	userId = ObjectID(userId);
 	unitId = ObjectID(unitId);
+	
 	mongodb.open(function(err, db) {
 		if(err) {
 			return callback(err);
@@ -49,48 +49,58 @@ Word.getAllByUnitId = function(unitId, callback) {
 			}
 
 			col.find({unitId: unitId}).toArray(function(err, words) {
-				db.close();
 				if(err) {
+					db.close();
 					return callback(err);
 				}
 
-				callback(null, words);
+				var len = words.length;
+				db.collection('users_words', function(err, uwCol) {
+					if(err) {
+						db.close();
+						return callback(err);
+					}
+
+					words.forEach(function(item, index, arr) {
+						uwCol.findOne({
+							wordId: item._id,
+							userId: userId
+						}, {
+							score: 1,
+							learnState: 1,
+							dt: 1
+						}, function(err, userWord) {
+							if(err) {
+								db.close();
+								return callback(err);
+							}
+
+							if(userWord == null) { // 如果学习状态不存在，赋默认值
+								userWord = {
+									score: 0,
+									learnState: true,
+									dt: 0
+								};
+							} else { // 如果存在，则检测相应字段
+								userWord.dt = userWord.dt ? userWord.dt : 0;
+								userWord.score = userWord.score ? userWord.score : 0;
+								userWord.learnState = userWord.learnState ? userWord.learnState : true;
+							}
+
+							tools.extend(arr[index], userWord);
+
+							if(--len === 0) {
+								db.close();
+								return callback(arr);
+							}
+						});
+					});
+				});
 			});
 		});
 	});
 };
 
-/**
- * [getAllByUnitId 通过unitId获取所有单词简略信息]
- */
-Word.getAllSimpleByUnitId = function(unitId, callback) {
-	unitId = ObjectID(unitId);
-	mongodb.open(function(err, db) {
-		if(err) {
-			return callback(err);
-		}
-
-		db.collection('words', function(err, col) {
-			if(err) {
-				db.close();
-				return callback(err);
-			}
-
-			col.find({unitId: unitId}).project({
-				word: 1,
-				learnState: 1,
-				dt: 1
-			}).toArray(function(err, words) {
-				db.close();
-				if(err) {
-					return callback(err);
-				}
-
-				callback(null, words);
-			});
-		});
-	});
-};
 
 /**
  * [update 更新单词信息]

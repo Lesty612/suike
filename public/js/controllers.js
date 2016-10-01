@@ -216,13 +216,16 @@ selectControllers.controller('infoCtrl', ['$scope', '$rootScope', function($scop
 typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'selectInfo', 'Types', function($scope, $rootScope, $http, selectInfo, Types) {
 	$rootScope.moduleTitle = '单元学习';
 	$scope.isAlert = false;
+	// 做题次数
+	$scope.dt = 0;
+	// 分数
+	$scope.score = 0;
 
 	var curIndex = -1, // 当前单词位置索引
 		data = 0, // 所有单词详细信息[数组]
 		dataLen = 0, // 需要学习的单词数量
 		pTotal = 0, // 全部单词的数据数量
-		pCurCount = 0,	// 学完的单词数量(整单元)
-		dt = 0; // 做题次
+		pCurCount = 0;	// 学完的单词数量(整单元)
 
 	$http.get('/type/get_words_detail', {
 		params: {
@@ -234,9 +237,10 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 
 		angular.forEach(data, function(item, index, arr) {
 			// 如果不学该单词，则删除
-			if(item.learnState === false || item.scope === 3) {
+			if(item.learnState === false || item.score === 3) {
 				arr.splice(index, 1);
 				pCurCount++;
+				return;
 			}
 
 			// 创建干扰项
@@ -261,9 +265,12 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 	 * @nextType {String} [如果指定了nextType，则按照默认顺序出题]
 	 */
 	$scope.toNextType = function(nextType) {
+		console.log('$scope.dt:', $scope.dt);
 		if(nextType != null) {
 			$scope.curType = nextType;
 		} else {
+			// 增加分数
+			$scope.score++;
 			if($scope.curType === 'type3') {
 				// 做完一个单词，完成总数+1
 				$scope.progress = parseInt(++pCurCount / pTotal * 100, 10);
@@ -284,8 +291,9 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 		// 跳到下一单词时，将当前单词学习情况发送到后台
 		if(curIndex >= 0) {
 			$http.post('/type/update_done_date', {
-				id: data[curIndex].id,
-				dt: dt
+				wordId: data[curIndex]._id,
+				dt: $scope.dt,
+				score: $scope.score
 			}).then(function(res) {
 				// success
 			}, function(err) {
@@ -296,7 +304,9 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 
 		if(++curIndex < dataLen) {
 			$scope.curWord = data[curIndex];
-			dt = 0;
+			// 重置学习数据
+			$scope.dt = $scope.curWord.dt;
+			$scope.score = $scope.curWord.score;
 
 			// 根据单词分数判断题型
 			switch ($scope.curWord.score) {
@@ -318,7 +328,9 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 		} else {
 			// 显示结束页面
 			$scope.curType = 'end';
-			dt = 0;
+			// 重置学习数据
+			$scope.dt = 0;
+			$scope.score = 0;
 			curIndex = -1;
 		}		
 	}

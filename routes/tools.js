@@ -41,5 +41,12 @@ function checkLogin(req, res, next) {
 	next();
 }
 
+function extend(targetObj, extendedObj) {
+	for(var o in extendedObj) {
+		targetObj[o] = extendedObj[o];
+	}
+}
+
 module.exports.checkLogin = checkLogin;
 module.exports.checkNotLogin = checkNotLogin;
+module.exports.extend = extend;
