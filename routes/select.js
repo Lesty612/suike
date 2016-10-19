@@ -189,7 +189,7 @@ router.post('/change_learn_state', function(req, res) {
 			res.status(200).json(err);
 		}
 
-		console.log('单词：' + reqData.id + '状态：' + reqData.learnState +'----更新完毕！');
+		console.log('单词id：' + reqData.id + ' learnState:' + reqData.learnState +'----更新完毕！');
 		res.status(200).json({
 			success: true,
 			msg: '单词状态更新成功！'

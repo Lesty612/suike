@@ -1,6 +1,7 @@
 var express = require('express'),
     router = express.Router(),
-    Word = require('../models/word');
+    Word = require('../models/word'),
+    UserWord = require('../models/user_word');
 
 /**
  * [做题模块的路由]
@@ -106,9 +107,24 @@ router.get('/get_words_detail', function(req, res) {
 });
 
 router.post('/update_done_date', function(req, res) {
-    res.status(200).json({
-    	status: true
-    });
+	var USER = req.session.user;
+	var reqData = req.body;
+
+	UserWord.update(USER._id, reqData.wordId, {
+		learnState: true,
+		score: reqData.score,
+		dt: reqData.dt
+	}, function(err) {
+		if(err) {
+			res.status(200).json(err);
+		}
+
+		console.log('单词id：' + reqData.wordId + ' score:' + reqData.score + ' dt:' + reqData.dt + '----更新完毕！');
+		res.status(200).json({
+			success: true,
+			msg: '单词状态更新成功！'
+		});
+	});
 });
 
 module.exports = router;

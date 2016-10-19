@@ -222,7 +222,7 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 	$scope.score = 0;
 
 	var curIndex = -1, // 当前单词位置索引
-		data = 0, // 所有单词详细信息[数组]
+		wordsDetailArr = [], // 所有单词详细信息[数组]
 		dataLen = 0, // 需要学习的单词数量
 		pTotal = 0, // 全部单词的数据数量
 		pCurCount = 0;	// 学完的单词数量(整单元)
@@ -232,23 +232,25 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 			date: +new Date()
 		}
 	}).then(function(res) {
-		data = Types.deepCopy(res.data);
-		pTotal = data.length;
-
-		angular.forEach(data, function(item, index, arr) {
-			// 如果不学该单词，则删除
+		angular.forEach(res.data, function(item, index, arr) {
+			// 不需要学该单词，则跳过
 			if(item.learnState === false || item.score === 3) {
-				arr.splice(index, 1);
 				pCurCount++;
 				return;
 			}
 
 			// 创建干扰项
-			Types.createRandomPic(res.data, arr[index]);
-			Types.createRandomMean(res.data, arr[index]);
+			Types.createRandomPic(arr, item);
+			Types.createRandomMean(arr, item);
+
+			// 加入最终需要学习的单词
+			wordsDetailArr.push(item);
 		});
 
-		dataLen = data.length;
+		// 全部单词的数据数量
+		pTotal = res.data.length;
+		// 需要学习的单词数量
+		dataLen = wordsDetailArr.length;
 
 		$scope.progress = parseInt(pCurCount / pTotal * 100, 10);
 
@@ -291,7 +293,7 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 		// 跳到下一单词时，将当前单词学习情况发送到后台
 		if(curIndex >= 0) {
 			$http.post('/type/update_done_date', {
-				wordId: data[curIndex]._id,
+				wordId: wordsDetailArr[curIndex]._id,
 				dt: $scope.dt,
 				score: $scope.score
 			}).then(function(res) {
@@ -303,7 +305,7 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 		}
 
 		if(++curIndex < dataLen) {
-			$scope.curWord = data[curIndex];
+			$scope.curWord = wordsDetailArr[curIndex];
 			// 重置学习数据
 			$scope.dt = $scope.curWord.dt;
 			$scope.score = $scope.curWord.score;

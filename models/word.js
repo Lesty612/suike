@@ -66,6 +66,7 @@ Word.getAll = function(userId, unitId, callback) {
 							wordId: item._id,
 							userId: userId
 						}, {
+							_id: 0,
 							score: 1,
 							learnState: 1,
 							dt: 1
@@ -82,9 +83,9 @@ Word.getAll = function(userId, unitId, callback) {
 									dt: 0
 								};
 							} else { // 如果存在，则检测相应字段
-								userWord.dt = userWord.dt ? userWord.dt : 0;
-								userWord.score = userWord.score ? userWord.score : 0;
-								userWord.learnState = userWord.learnState ? userWord.learnState : true;
+								userWord.dt = userWord.dt != null ? userWord.dt : 0;
+								userWord.score = userWord.score != null ? userWord.score : 0;
+								userWord.learnState = userWord.learnState != null ? userWord.learnState : true;
 							}
 
 							tools.extend(arr[index], userWord);
