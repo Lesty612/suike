@@ -251,6 +251,7 @@ typeControllers.controller('doTypeCtrl', ['$scope', '$rootScope', '$http', 'sele
 		pTotal = res.data.length;
 		// 需要学习的单词数量
 		dataLen = wordsDetailArr.length;
+		console.dir(wordsDetailArr);
 
 		$scope.progress = parseInt(pCurCount / pTotal * 100, 10);
 

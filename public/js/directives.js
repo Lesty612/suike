@@ -28,15 +28,10 @@ typeDirectives.directive('stType2', function() {
 		link: function(scope, element, attrs) {
 			$('#picList').on('click.t2', 'li', function() {
 				var $li = $(this),
-					picSrc = $li.children('img')[0].src;
+					picSrc = $li.children('img').attr('src');
 				
 				// 增加做题次数
-				scope.dt++;
-
-				// 本地调试时，修改图片路径
-				if(picSrc.indexOf('http://localhost:8777') !== -1) {
-					picSrc = picSrc.replace('http://localhost:8777', '.');
-				}
+				scope.$parent.dt++;
 				
 				// 选择正确
 				if(picSrc === scope.curWord.p2) {
@@ -71,10 +66,10 @@ typeDirectives.directive('stType3', function() {
 		link: function(scope, element, attrs) {
 			$('#meanList').on('click.t3', 'li', function() {
 				var $li = $(this),
-					wordMean = $li.children('span').text();
+					wordMean = $li.text();
 
 				// 增加做题次数
-				scope.dt++;
+				scope.$parent.dt++;
 
 				// 选择正确
 				if(wordMean === scope.curWord.wordMean) {

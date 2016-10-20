@@ -142,9 +142,9 @@
 	width: 48%;
 	height: 150px;
 	margin-top: 10px;
-	padding: 10px 5px;
+	padding: 6px 5px;
 
-	background-color: #CDCDCD;
+	background-color: #ccc;
 	border: 2px solid transparent;
 	border-radius: 8px;
 
@@ -156,27 +156,25 @@
 }
 
 .pic-item:hover {
-	border-color: #0076DC;
+	border-color: #31708f;
 }
 
 .mean-item {
+	width: 60%;
+	margin: 0 auto;
+	padding: 10px 0;
+
 	/*必须，因为ul里font-size为0*/
 	font-size: 16px;
-
+	border: 1px solid #F2EEE1;
 	cursor: pointer;
 }
 
-.mean-item > span {
-	display: inline-block;
-	width: 60%;
-	padding: 10px 0;
-
-	border: 1px solid #F2EEE1;
-}
-
-.mean-item > span:hover {
-	color: #000;
-	background-color: #CDCDCD;
+.mean-item:hover {
+	font-size: large;
+    color: #000;
+    
+    border-color: #ccc;
 }
 
 @media(min-width: 768px) {
